@@ -1,0 +1,10 @@
+---
+import Layout from "../layouts/Layout.astro";
+import DashboardPage from "../components/dashboard";
+import { TwaSolidLayout } from "../layouts/twa/solid-layout";
+---
+<Layout title="Dashboard">
+    <TwaSolidLayout client:only="solid-js">
+      <DashboardPage /> 
+    </TwaSolidLayout>
+</Layout>
