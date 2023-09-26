@@ -18,9 +18,15 @@ Install dependencies with yarn
   yarn
 ```
 
+## Run webhook proxy server
+
+```sh
+yarn ngrok
+```
+
 ## Run Locally
 
-Run both backend and frontend
+Run both backend and frontend on port 3000
 
 ```bash
   yarn dev
