@@ -4,7 +4,7 @@ export function DashboardPage() {
   return (
     <>
       <h1>Dashboard Home Page</h1>
-      <A href="/dashboard/create-store">Create store</A>
+      <A href="/create-store">Create store</A>
     </>
   );
 }
