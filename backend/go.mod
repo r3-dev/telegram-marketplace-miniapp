@@ -1,6 +1,6 @@
 module pb-stack
 
-go 1.19
+go 1.21.1
 
 require github.com/pocketbase/pocketbase v0.17.3
 
@@ -33,6 +33,7 @@ require (
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/ganigeorgiev/fexpr v0.3.0 // indirect
+	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect

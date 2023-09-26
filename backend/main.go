@@ -2,9 +2,13 @@ package main
 
 import (
 	"log"
+	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"os"
 	"strings"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -31,7 +35,56 @@ func main() {
 		return nil
 	})
 
+	go reverseProxy()
+
 	if err := app.Start(); err != nil {
 		log.Fatal(err)
+	}
+}
+
+func reverseProxy() {
+
+	log.Println("starting reverse proxy...")
+
+	remoteBackend, err := url.Parse("http://localhost:8090")
+	if err != nil {
+		panic(err)
+	}
+
+	remoteFrontend, err := url.Parse("http://localhost:4321")
+	if err != nil {
+		panic(err)
+	}
+
+	handlerBackend := func(p *httputil.ReverseProxy) func(http.ResponseWriter, *http.Request) {
+		return func(w http.ResponseWriter, r *http.Request) {
+			// log.Println(r.URL)
+			r.Host = remoteBackend.Host
+			w.Header().Set("X-Ben", "Rad")
+			p.ServeHTTP(w, r)
+		}
+	}
+
+	handlerFrontend := func(p *httputil.ReverseProxy) func(http.ResponseWriter, *http.Request) {
+		return func(w http.ResponseWriter, r *http.Request) {
+			log.Println(r.URL)
+			r.Host = remoteFrontend.Host
+			w.Header().Set("X-Ben", "Rad")
+			p.ServeHTTP(w, r)
+		}
+	}
+
+	proxyBackend := httputil.NewSingleHostReverseProxy(remoteBackend)
+	proxyFrontend := httputil.NewSingleHostReverseProxy(remoteFrontend)
+
+	r := chi.NewRouter()
+
+	r.HandleFunc("/api/*", handlerBackend(proxyBackend))
+	r.HandleFunc("/_/*", handlerBackend(proxyBackend))
+	r.HandleFunc("/", handlerFrontend(proxyFrontend))
+
+	err = http.ListenAndServe(":3000", r)
+	if err != nil {
+		panic(err)
 	}
 }
