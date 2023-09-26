@@ -1,11 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import DashboardPage from "../components/dashboard";
-import DashboardRoot from "../components/dashboard/root";
-import { TwaSolidLayout } from "../layouts/twa/solid-layout";
+import { DashboardRoot } from "../components/dashboard/root";
 ---
 <Layout title="Dashboard">
-    <TwaSolidLayout client:only="solid-js">
-      <DashboardRoot client:only="solid-js"/>
-    </TwaSolidLayout>
+  <DashboardRoot client:only="solid-js"/>
 </Layout>

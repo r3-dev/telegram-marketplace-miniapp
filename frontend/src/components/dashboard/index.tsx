@@ -1,6 +1,6 @@
 import { A } from "@solidjs/router";
 
-export default function DashboardPage() {
+export function DashboardPage() {
   return (
     <>
       <h1>Dashboard Home Page</h1>
