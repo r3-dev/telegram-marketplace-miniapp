@@ -58,7 +58,6 @@ func reverseProxy() {
 
 	handlerBackend := func(p *httputil.ReverseProxy) func(http.ResponseWriter, *http.Request) {
 		return func(w http.ResponseWriter, r *http.Request) {
-			// log.Println(r.URL)
 			r.Host = remoteBackend.Host
 			w.Header().Set("X-Ben", "Rad")
 			p.ServeHTTP(w, r)
@@ -67,7 +66,7 @@ func reverseProxy() {
 
 	handlerFrontend := func(p *httputil.ReverseProxy) func(http.ResponseWriter, *http.Request) {
 		return func(w http.ResponseWriter, r *http.Request) {
-			log.Println(r.URL)
+			log.Println("GET page from " + r.URL.String())
 			r.Host = remoteFrontend.Host
 			w.Header().Set("X-Ben", "Rad")
 			p.ServeHTTP(w, r)
@@ -81,7 +80,7 @@ func reverseProxy() {
 
 	r.HandleFunc("/api/*", handlerBackend(proxyBackend))
 	r.HandleFunc("/_/*", handlerBackend(proxyBackend))
-	r.HandleFunc("/", handlerFrontend(proxyFrontend))
+	r.HandleFunc("/*", handlerFrontend(proxyFrontend))
 
 	err = http.ListenAndServe(":3000", r)
 	if err != nil {
