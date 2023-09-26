@@ -1,14 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 
+	initdata "github.com/Telegram-Web-Apps/init-data-golang"
 	"github.com/go-chi/chi/v5"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
@@ -21,11 +26,28 @@ import (
 func telegramCheck(app core.App) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			// read the header values
-			email := c.Request().Header.Get("Remote-Email")
+			token := os.Getenv("TELEGRAM_BOT_TOKEN")
 
+			expIn := 24 * time.Hour
+
+			// TODO: изменить ключ хедера
+			// read the header values
+			initDataRaw := c.Request().Header.Get("init-data")
+			initData, errParse := initdata.Parse(initDataRaw)
+			if errParse != nil {
+				err := fmt.Errorf("init data parse: %w", errParse)
+				return err
+			}
+
+			if initData.User == nil {
+				return fmt.Errorf("no user")
+			}
+
+			if err := initdata.Validate(initDataRaw, token, expIn); err != nil {
+				return err
+			}
 			// authorizing regular users (the same could be done for admins)
-			user, err := app.Dao().FindAuthRecordByEmail("user-collection", email)
+			user, err := app.Dao().FindRecordsByIds("users", []string{strconv.Itoa(int(initData.User.ID))})
 			if err != nil {
 				return err
 				// or if you want a formatted error
@@ -42,6 +64,11 @@ func telegramCheck(app core.App) echo.MiddlewareFunc {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	app := pocketbase.New()
 
 	// loosely check if it was executed using "go run"

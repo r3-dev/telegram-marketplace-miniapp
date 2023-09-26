@@ -5,6 +5,11 @@ go 1.21.1
 require github.com/pocketbase/pocketbase v0.17.3
 
 require (
+	github.com/Telegram-Web-Apps/init-data-golang v1.1.1 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
+)
+
+require (
 	github.com/AlecAivazis/survey/v2 v2.3.7 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/aws/aws-sdk-go v1.44.313 // indirect
