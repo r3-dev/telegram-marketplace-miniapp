@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -16,6 +17,29 @@ import (
 	// uncomment once you have at least one .go migration file in the "migrations" directory
 	// _ "yourpackage/migrations"
 )
+
+func telegramCheck(app core.App) echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			// read the header values
+			email := c.Request().Header.Get("Remote-Email")
+
+			// authorizing regular users (the same could be done for admins)
+			user, err := app.Dao().FindAuthRecordByEmail("user-collection", email)
+			if err != nil {
+				return err
+				// or if you want a formatted error
+				// rest.NewUnauthorizedError("User doesn't exist", err)
+			}
+
+			// "authenticating" the user
+			// for admins it would be `c.Set(apis.ContextAdminKey, admin)`
+			c.Set("USER-KEY", user)
+
+			return next(c)
+		}
+	}
+}
 
 func main() {
 	app := pocketbase.New()
@@ -32,6 +56,9 @@ func main() {
 	// serves static files from the provided public dir (if exists)
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		e.Router.GET("/*", apis.StaticDirectoryHandler(os.DirFS("./pb_public"), false))
+
+		e.Router.Pre(telegramCheck(app))
+
 		return nil
 	})
 
