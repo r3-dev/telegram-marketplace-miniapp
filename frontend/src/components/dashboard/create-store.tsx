@@ -1,10 +1,10 @@
 import { A } from "@solidjs/router";
 
-export default function CreateStorePage() {
+export function CreateStorePage() {
   return (
     <>
-      <h1>Create Page</h1>
-      <A href="/dashboard">Go back</A>
+      <h1>Create Store Page</h1>
+      <A href="/">Go back</A>
     </>
   );
 }

@@ -1,16 +1,17 @@
-import { Router, Routes, Route, A } from "@solidjs/router";
-import DashboardPage from ".";
-import CreateStorePage from "./create-store";
+import { Router, Routes, Route, hashIntegration } from "@solidjs/router";
+import { DashboardPage } from ".";
+import { CreateStorePage } from "./create-store";
+import { TwaSolidLayout } from "../../layouts/twa/solid-layout";
 
-export default function DashboardRoot() {
+export function DashboardRoot() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/dashboard">
+    <TwaSolidLayout>
+      <Router source={hashIntegration()}>
+        <Routes>
           <Route path="/" component={DashboardPage} />
           <Route path="/create-store" component={CreateStorePage} />
-        </Route>
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </TwaSolidLayout>
   );
 }
