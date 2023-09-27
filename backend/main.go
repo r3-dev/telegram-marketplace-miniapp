@@ -18,6 +18,7 @@ import (
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/models"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 
 	// uncomment once you have at least one .go migration file in the "migrations" directory
@@ -54,9 +55,21 @@ func telegramCheck(app core.App) echo.MiddlewareFunc {
 			// authorizing regular users (the same could be done for admins)
 			user, err := app.Dao().FindRecordsByIds("users", []string{strconv.Itoa(int(initData.User.ID))})
 			if err != nil {
-				return err
-				// or if you want a formatted error
-				// rest.NewUnauthorizedError("User doesn't exist", err)
+				collection, err := app.Dao().FindCollectionByNameOrId("users")
+				if err != nil {
+					return err
+				}
+
+				record := models.NewRecord(collection)
+
+				// set individual fields
+				// or bulk load with record.Load(map[string]any{...})
+				record.Set("id", initData.User.ID)
+				record.Set("username", initData.User.Username)
+
+				if errSave := app.Dao().SaveRecord(record); errSave != nil {
+					return errSave
+				}
 			}
 
 			// "authenticating" the user
