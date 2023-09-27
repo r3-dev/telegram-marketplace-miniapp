@@ -33,6 +33,7 @@ export type AuthSystemFields<T = never> = {
 
 export type StoresRecord = {
 	name: string
+	user?: RecordIdString
 }
 
 export type UsersRecord = {
