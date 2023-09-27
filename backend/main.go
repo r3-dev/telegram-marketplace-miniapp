@@ -76,7 +76,8 @@ func main() {
 	app := pocketbase.New()
 
 	// loosely check if it was executed using "go run"
-	isDevMode := strings.HasPrefix(os.Args[0], os.TempDir())
+	exePath := os.Args[0]
+	isDevMode := strings.HasPrefix(exePath, os.TempDir()) || strings.Contains(exePath, "debug")
 
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
 		// enable auto creation of migration files when making collection changes in the Admin UI
