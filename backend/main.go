@@ -26,12 +26,17 @@ import (
 func telegramCheck(app core.App) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
+
 			token := os.Getenv("TELEGRAM_BOT_TOKEN")
 
 			expIn := 24 * time.Hour
 
 			// read the header values
 			initDataRaw := c.Request().Header.Get("X-Init-Data")
+			if initDataRaw == "" {
+				return next(c)
+			}
+
 			initData, errParse := initdata.Parse(initDataRaw)
 			if errParse != nil {
 				err := fmt.Errorf("init data parse: %w", errParse)
