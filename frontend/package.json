@@ -16,6 +16,7 @@
     "@twa-dev/sdk": "^6.9.0",
     "@twa.js/sdk-solid": "^0.1.2",
     "astro": "^3.1.4",
+    "pocketbase": "^0.18.0",
     "solid-js": "^1.4.3"
   }
 }
