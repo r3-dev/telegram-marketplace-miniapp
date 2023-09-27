@@ -30,9 +30,8 @@ func telegramCheck(app core.App) echo.MiddlewareFunc {
 
 			expIn := 24 * time.Hour
 
-			// TODO: изменить ключ хедера
 			// read the header values
-			initDataRaw := c.Request().Header.Get("init-data")
+			initDataRaw := c.Request().Header.Get("X-Init-Data")
 			initData, errParse := initdata.Parse(initDataRaw)
 			if errParse != nil {
 				err := fmt.Errorf("init data parse: %w", errParse)
