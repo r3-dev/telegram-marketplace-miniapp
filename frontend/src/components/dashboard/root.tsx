@@ -5,6 +5,7 @@ import { PocketbaseProvider } from "../../contexts/pocketbase";
 import { attachDevtoolsOverlay } from "@solid-devtools/overlay";
 import { SDKProvider } from "@twa.js/sdk-solid";
 import { DisplayGate } from "../twa-display-gate";
+import './index.css'
 
 if (import.meta.env.DEV) {
   attachDevtoolsOverlay();
@@ -17,7 +18,7 @@ if (import.meta.env.DEV) {
 
 export function DashboardRoot() {
   return (
-    <SDKProvider initOptions={{ timeout: 3000, debug: true }}>
+    <SDKProvider initOptions={{ timeout: 3000, debug: true, cssVars: true }}>
       <DisplayGate>
         <PocketbaseProvider>
           <Router source={hashIntegration()}>
