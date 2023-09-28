@@ -15,10 +15,10 @@
     }
   },
   "scripts": {
-    "dev": "concurrently  -n \"BACKEND,FRONTEND,TYPEGEN\" -c \"cyan,yellow,red\" \"npm run dev:be\" \"npm run dev:fe\" \"npm run watch\"",
+    "dev": "concurrently --kill-others  -n \"BACKEND,FRONTEND,TYPEGEN\" -c \"cyan,yellow,red\" \"bun run dev:be\" \"bun run dev:fe\" \"bun run watch\"",
     "dev:be": "cd backend && go run . serve",
-    "dev:fe": "cd frontend && npm run dev",
-    "postinstall": "concurrently  -n \"BACKEND,FRONTEND\" -c \"cyan,yellow\" \"npm run postinstall:be\" \"npm run postinstall:fe\"",
+    "dev:fe": "cd frontend && bun run dev",
+    "postinstall": "concurrently  -n \"BACKEND,FRONTEND\" -c \"cyan,yellow\" \"bun run postinstall:be\" \"bun run postinstall:fe\"",
     "postinstall:be": "cd backend && go mod tidy && go mod download",
     "postinstall:fe": "cd frontend && bun install",
     "typegen": "pocketbase-typegen --db ./backend/pb_data/data.db --out ./frontend/pocketbase/pb-types.ts",
