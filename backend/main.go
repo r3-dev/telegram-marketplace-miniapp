@@ -81,7 +81,7 @@ func telegramCheck(app core.App) echo.MiddlewareFunc {
 
 			// "authenticating" the user
 			// for admins it would be `c.Set(apis.ContextAdminKey, admin)`
-			c.Set("USER-KEY", user)
+			c.Set(apis.ContextAuthRecordKey, user)
 
 			return next(c)
 		}
