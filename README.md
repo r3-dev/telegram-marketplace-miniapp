@@ -12,16 +12,16 @@ This is a fullstack template for blazingly fast MVP development. It is focused o
 
 ## Installation
 
-Install dependencies with yarn
+Install dependencies with pnpm
 
 ```bash
-  yarn
+  pnpm
 ```
 
 ## Run webhook proxy server
 
 ```sh
-yarn ngrok
+pnpm ngrok
 ```
 
 ## Run Locally
@@ -29,5 +29,5 @@ yarn ngrok
 Run both backend and frontend on port 3000
 
 ```bash
-  yarn dev
+  pnpm dev
 ```
