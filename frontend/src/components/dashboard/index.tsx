@@ -3,6 +3,7 @@ import { type ListResult } from "pocketbase";
 import { Collections, type StoresResponse } from "../../../pocketbase/pb-types";
 import { For, createSignal, onMount } from "solid-js";
 import { pb } from "../../services/pocketbase-service";
+import WebApp from "@twa-dev/sdk";
 
 const storesDefaultValue = {
   items: [] as StoresResponse[],
@@ -22,8 +23,19 @@ export function DashboardPage() {
     setStores(records);
   });
 
+  const handleClick = async () => {
+    await pb.collection("users").authRefresh({
+      headers: {
+        "X-Init-Data": WebApp.initData,
+      }
+    });
+    
+    console.log("Is valid", pb.authStore.isValid);
+  }
+
   return (
     <>
+      <button onClick={handleClick}>REFRESH</button>
       <For each={stores().items}>
         {(record) => (
           <div>

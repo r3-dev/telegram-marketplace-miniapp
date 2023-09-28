@@ -13,3 +13,13 @@ pb.beforeSend = function (url, options) {
 
   return { url, options };
 };
+
+await pb.collection("users").authWithPassword("USERNAMELESS", "PASSWORDLESS", {
+  headers: {
+    "X-Init-Data": WebApp.initData,
+  }
+});
+
+console.log("Is valid", pb.authStore.isValid);
+
+

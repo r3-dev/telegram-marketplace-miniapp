@@ -4,8 +4,10 @@ import type { Component, ParentProps } from "solid-js";
 
 export const TwaSolidLayout: Component<ParentProps> = ({ children }) => {
   return (
-    <SDKProvider>
-      <DisplayGate>{children}</DisplayGate>
+    <SDKProvider initOptions={{timeout: 3000, debug: true}}> 
+      <DisplayGate>
+        {children}
+      </DisplayGate>
     </SDKProvider>
   );
 };
