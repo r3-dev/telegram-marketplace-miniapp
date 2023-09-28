@@ -1,8 +1,8 @@
 import { A } from "@solidjs/router";
-import PocketBase, { type ListResult } from "pocketbase";
-import WebApp from "@twa-dev/sdk";
+import { type ListResult } from "pocketbase";
 import { Collections, type StoresResponse } from "../../../pocketbase/pb-types";
 import { For, createSignal, onMount } from "solid-js";
+import { pb } from "../../services/pocketbase-service";
 
 const storesDefaultValue = {
   items: [] as StoresResponse[],
@@ -11,18 +11,6 @@ const storesDefaultValue = {
 export function DashboardPage() {
   const [stores, setStores] =
     createSignal<ListResult<StoresResponse>>(storesDefaultValue);
-  const pb = new PocketBase("http://127.0.0.1:3000");
-
-  // Auth with telegram init data
-  pb.beforeSend = function (url, options) {
-    // For list of the possible request options properties check
-    // https://developer.mozilla.org/en-US/docs/Web/API/fetch#options
-    options.headers = Object.assign({}, options.headers, {
-      "X-Init-Data": WebApp.initData,
-    });
-
-    return { url, options };
-  };
 
   onMount(async () => {
     const records = await pb
