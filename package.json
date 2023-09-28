@@ -23,17 +23,18 @@
     "postinstall:fe": "cd frontend && bun install",
     "typegen": "pocketbase-typegen --db ./backend/pb_data/data.db --out ./frontend/pocketbase/pb-types.ts",
     "watch": "npm-watch",
-    "ngrok": "npx ngrok http 3000"
+    "ngrok": "bunx ngrok http 3000",
+    "install-sqlite-mac-m1": "npm install -d sqlite3 --build-from-source --target_arch=arm64 --fallback-to-build && rm -rf package-lock.json"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
     "ngrok": "^5.0.0-beta.2",
     "npm-watch": "latest",
-    "pocketbase-typegen": "^1.1.13"
+    "pocketbase-typegen": "^1.1.13",
+    "sqlite3": "^5.1.6"
   },
   "dependencies": {
-    "node": "latest",
-    "sqlite3": "^5.1.6"
+    "node": "latest"
   },
   "trustedDependencies": [
     "pocketbase-typegen",
