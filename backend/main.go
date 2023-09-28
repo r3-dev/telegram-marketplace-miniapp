@@ -9,12 +9,9 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
-	initdata "github.com/Telegram-Web-Apps/init-data-golang"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
-	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -24,69 +21,6 @@ import (
 	// uncomment once you have at least one .go migration file in the "migrations" directory
 	_ "pb-stack/migrations"
 )
-
-func telegramCheck(app core.App) echo.MiddlewareFunc {
-	return func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-
-			token := os.Getenv("TELEGRAM_BOT_TOKEN")
-
-			expIn := 24 * time.Hour
-
-			// read the header values
-			initDataRaw := c.Request().Header.Get("X-Init-Data")
-			if initDataRaw == "" {
-				return next(c)
-			}
-
-			initData, errParse := initdata.Parse(initDataRaw)
-			if errParse != nil {
-				err := fmt.Errorf("init data parse: %w", errParse)
-				return err
-			}
-
-			if initData.User == nil {
-				return fmt.Errorf("no user")
-			}
-
-			if err := initdata.Validate(initDataRaw, token, expIn); err != nil {
-				return err
-			}
-			// authorizing regular users (the same could be done for admins)
-			user, err := app.Dao().FindRecordById("users", strconv.Itoa(int(initData.User.ID)))
-			if err != nil {
-				// TODO: Check if the error is a "not found" error
-				log.Default().Println("user not found, creating new one...")
-
-				collection, err := app.Dao().FindCollectionByNameOrId("users")
-				if err != nil {
-					return err
-				}
-
-				record := models.NewRecord(collection)
-
-				// set individual fields
-				// or bulk load with record.Load(map[string]any{...})
-				record.Set("id", initData.User.ID)
-				record.Set("username", initData.User.Username)
-
-				if errSave := app.Dao().SaveRecord(record); errSave != nil {
-					return errSave
-				}
-
-				user = record
-			} else {
-				log.Default().Println("user found: " + user.Id)
-			}
-
-			// "authenticating" the user
-			// for admins it would be `c.Set(apis.ContextAdminKey, admin)`
-			c.Set(apis.ContextAuthRecordKey, user)
-
-			return next(c)
-		}
-	}
-}
 
 func main() {
 	err := godotenv.Load()
@@ -110,7 +44,77 @@ func main() {
 	app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		e.Router.GET("/*", apis.StaticDirectoryHandler(os.DirFS("./pb_public"), false))
 
-		e.Router.Pre(telegramCheck(app))
+		//e.Router.Pre(telegramCheck(app))
+
+		return nil
+	})
+
+	app.OnRecordBeforeAuthWithPasswordRequest().Add(func(e *core.RecordAuthWithPasswordEvent) error {
+
+		initDataUser, err := initDataCheck(e.HttpContext, e.Identity, e.Password)
+		if initDataUser == nil {
+			log.Println("no init data")
+			return nil
+		} else if err != nil {
+			log.Println("something wrong: " + err.Error())
+			return err
+		}
+
+		// authorizing regular users (the same could be done for admins)
+		user, err := app.Dao().FindRecordById("users", strconv.FormatInt(initDataUser.ID, 10))
+		if err != nil {
+			// TODO: Check if the error is a "not found" error
+			log.Default().Println("user not found, creating new one...")
+
+			collection, errFind := app.Dao().FindCollectionByNameOrId("users")
+			if errFind != nil {
+				return err
+			}
+
+			record := models.NewRecord(collection)
+
+			// set individual fields
+			// or bulk load with record.Load(map[string]any{...})
+			username := getUsername(initDataUser.Username, initDataUser.ID)
+			record.Set("id", initDataUser.ID)
+			record.Set("username", username)
+
+			if errVerify := record.SetPassword("PASSWORDLESS"); errVerify != nil {
+				return errVerify
+			}
+			if errVerify := record.SetVerified(true); errVerify != nil {
+				return errVerify
+			}
+
+			if errSave := app.Dao().SaveRecord(record); errSave != nil {
+				return errSave
+			}
+
+			user = record
+		} else {
+			log.Default().Println("user found: " + user.Id)
+		}
+
+		// "authenticating" the user
+		// for admins it would be `c.Set(apis.ContextAdminKey, admin)`
+		//e.HttpContext.Set(apis.ContextAuthRecordKey, user)
+
+		if errAuthResp := apis.RecordAuthResponse(app, e.HttpContext, user, nil); errAuthResp != nil {
+			return errAuthResp
+		}
+		return fmt.Errorf("skip")
+	})
+
+	// fires for every auth collection
+	app.OnRecordBeforeAuthRefreshRequest().Add(func(e *core.RecordAuthRefreshEvent) error {
+		initDataUser, err := initDataCheck(e.HttpContext, "USERNAMELESS", "PASSWORDLESS")
+		if initDataUser == nil {
+			log.Println("no init data")
+			return nil
+		} else if err != nil {
+			log.Println("something wrong: " + err.Error())
+			return err
+		}
 
 		return nil
 	})
