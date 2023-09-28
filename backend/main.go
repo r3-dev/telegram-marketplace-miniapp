@@ -53,8 +53,11 @@ func telegramCheck(app core.App) echo.MiddlewareFunc {
 				return err
 			}
 			// authorizing regular users (the same could be done for admins)
-			user, err := app.Dao().FindRecordsByIds("users", []string{strconv.Itoa(int(initData.User.ID))})
+			user, err := app.Dao().FindRecordById("users", strconv.Itoa(int(initData.User.ID)))
 			if err != nil {
+				// TODO: Check if the error is a "not found" error
+				log.Default().Println("user not found, creating new one...")
+
 				collection, err := app.Dao().FindCollectionByNameOrId("users")
 				if err != nil {
 					return err
@@ -70,6 +73,10 @@ func telegramCheck(app core.App) echo.MiddlewareFunc {
 				if errSave := app.Dao().SaveRecord(record); errSave != nil {
 					return errSave
 				}
+
+				user = record
+			} else {
+				log.Default().Println("user found: " + user.Id)
 			}
 
 			// "authenticating" the user
