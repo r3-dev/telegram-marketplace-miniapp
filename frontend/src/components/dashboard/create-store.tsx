@@ -1,13 +1,14 @@
 import { A } from "@solidjs/router";
 import { createSignal } from "solid-js";
-import { pb } from "../../services/pocketbase-service";
 import type {
   StoresRecord,
   StoresResponse,
   UsersResponse,
 } from "../../../pocketbase/pb-types";
+import { usePocketbase } from "../../contexts/pocketbase";
 
 export function CreateStorePage() {
+  const pb = usePocketbase()
   const [titleInput, setTitleInput] = createSignal("");
 
   async function submitHandler(event: Event) {
