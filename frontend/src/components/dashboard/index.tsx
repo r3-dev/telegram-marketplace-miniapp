@@ -1,11 +1,16 @@
 import { A } from "@solidjs/router";
-import PocketBase from "pocketbase";
+import PocketBase, { type ListResult } from "pocketbase";
 import WebApp from "@twa-dev/sdk";
 import { Collections, type StoresResponse } from "../../../pocketbase/pb-types";
 import { For, createSignal, onMount } from "solid-js";
 
+const storesDefaultValue = {
+  items: [] as StoresResponse[],
+} as ListResult<StoresResponse>;
+
 export function DashboardPage() {
-  const [stores, setStores] = createSignal<StoresResponse[]>([]);
+  const [stores, setStores] =
+    createSignal<ListResult<StoresResponse>>(storesDefaultValue);
   const pb = new PocketBase("http://127.0.0.1:3000");
 
   // Auth with telegram init data
@@ -22,14 +27,16 @@ export function DashboardPage() {
   onMount(async () => {
     const records = await pb
       .collection(Collections.Stores)
-      .getFullList<StoresResponse>();
+      .getList<StoresResponse>();
+
+    console.log(records);
 
     setStores(records);
   });
 
   return (
     <>
-      <For each={stores()}>
+      <For each={stores().items}>
         {(record) => (
           <div>
             <h2>{record.name}</h2>
