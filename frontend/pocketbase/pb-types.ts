@@ -3,6 +3,10 @@
 */
 
 export enum Collections {
+	Categories = "categories",
+	OrderItems = "order_items",
+	Orders = "orders",
+	Products = "products",
 	Stores = "stores",
 	Users = "users",
 }
@@ -31,8 +35,34 @@ export type AuthSystemFields<T = never> = {
 
 // Record types for each collection
 
-export type StoresRecord = {
+export type CategoriesRecord = {
+	name?: string
+}
+
+export type OrderItemsRecord = {
+	order: RecordIdString
+	product: RecordIdString
+	quantity: number
+}
+
+export type OrdersRecord = {
+	store?: RecordIdString
+	user?: RecordIdString
+}
+
+export type ProductsRecord = {
+	category?: RecordIdString
+	description?: string
+	images?: string[]
 	name: string
+	price?: number
+}
+
+export type StoresRecord = {
+	description?: string
+	field?: string
+	name: string
+	products?: RecordIdString[]
 	user?: RecordIdString
 }
 
@@ -42,17 +72,29 @@ export type UsersRecord = {
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type CategoriesResponse<Texpand = unknown> = Required<CategoriesRecord> & BaseSystemFields<Texpand>
+export type OrderItemsResponse<Texpand = unknown> = Required<OrderItemsRecord> & BaseSystemFields<Texpand>
+export type OrdersResponse<Texpand = unknown> = Required<OrdersRecord> & BaseSystemFields<Texpand>
+export type ProductsResponse<Texpand = unknown> = Required<ProductsRecord> & BaseSystemFields<Texpand>
 export type StoresResponse<Texpand = unknown> = Required<StoresRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
+	categories: CategoriesRecord
+	order_items: OrderItemsRecord
+	orders: OrdersRecord
+	products: ProductsRecord
 	stores: StoresRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
+	categories: CategoriesResponse
+	order_items: OrderItemsResponse
+	orders: OrdersResponse
+	products: ProductsResponse
 	stores: StoresResponse
 	users: UsersResponse
 }
