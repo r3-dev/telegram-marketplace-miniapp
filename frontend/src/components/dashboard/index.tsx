@@ -1,15 +1,22 @@
-import { A } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import { type ListResult } from "pocketbase";
 import { Collections, type StoresResponse } from "../../../pocketbase/pb-types";
-import { For, createSignal, onMount } from "solid-js";
-import { usePocketbase } from "../../contexts/pocketbase";
+import { For, createEffect, createSignal, onMount } from "solid-js";
+import { usePocketBase } from "../../contexts/pocketbase";
+import { useSDK } from "@twa.js/sdk-solid";
+import { MainButton } from "@twa.js/sdk";
+import { LottieAnimation } from "../lottie-animation";
+import "../../styles/index.css";
 
 const storesDefaultValue = {
   items: [] as StoresResponse[],
 } as ListResult<StoresResponse>;
 
 export function DashboardPage() {
-  const pb = usePocketbase()
+  const sdk = useSDK();
+  const pb = usePocketBase();
+  const navigate = useNavigate();
+
   const [stores, setStores] =
     createSignal<ListResult<StoresResponse>>(storesDefaultValue);
 
@@ -18,13 +25,39 @@ export function DashboardPage() {
       .collection(Collections.Stores)
       .getList<StoresResponse>();
 
-    console.log(records);
-
     setStores(records);
   });
 
+  createEffect(() => {
+    const mainButton = new MainButton(
+      sdk.themeParams().buttonColor!,
+      true,
+      true,
+      false,
+      "Create store",
+      sdk.themeParams().buttonTextColor!
+    );
+
+    function goToCreateStore() {
+      navigate("/create-store");
+      mainButton.off("click", goToCreateStore);
+      mainButton.hide();
+    }
+
+    mainButton.on("click", goToCreateStore);
+    mainButton.show();
+  });
+
   return (
-    <>
+    <div>
+      <h1 style={{ "font-weight": "bold", "font-size": "3rem" }}>
+        Hello, {sdk.initData()?.user?.firstName}
+      </h1>
+      <LottieAnimation
+        animationData={location.origin + "/lottie/congratulations.json"}
+        autoplay={true}
+        loop={true}
+      />
       <For each={stores().items}>
         {(record) => (
           <div>
@@ -33,8 +66,6 @@ export function DashboardPage() {
           </div>
         )}
       </For>
-      <h1>Dashboard Home Page</h1>
-      <A href="/create-store">Create store</A>
-    </>
+    </div>
   );
 }

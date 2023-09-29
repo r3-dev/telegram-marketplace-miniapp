@@ -13,9 +13,12 @@
   "dependencies": {
     "@astrojs/solid-js": "^3.0.1",
     "@astrojs/tailwind": "^5.0.0",
+    "@kobalte/core": "^0.11.0",
     "@solidjs/router": "^0.8.3",
+    "@twa.js/sdk": "^0.11.2",
     "@twa.js/sdk-solid": "^0.1.2",
-    "astro": "^3.1.4",
+    "astro": "^3.2.0",
+    "lottie-web": "^5.12.2",
     "pocketbase": "^0.18.0",
     "solid-js": "^1.4.3",
     "tailwindcss": "^3.0.24"

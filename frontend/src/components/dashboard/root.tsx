@@ -1,18 +1,19 @@
 import { Router, Routes, Route, hashIntegration } from "@solidjs/router";
 import { DashboardPage } from "./index";
-import { CreateStorePage } from "./create-store";
+import { CreateStorePage } from "./create-store/create-store";
 import { PocketbaseProvider } from "../../contexts/pocketbase";
 import { attachDevtoolsOverlay } from "@solid-devtools/overlay";
 import { SDKProvider } from "@twa.js/sdk-solid";
 import { DisplayGate } from "../twa-display-gate";
-import './index.css'
+import { CreateProductPage } from "./create-product/create-product";
+import { ProductsListPage } from "./products-list/products-list";
 
 if (import.meta.env.DEV) {
   attachDevtoolsOverlay();
 
   attachDevtoolsOverlay({
     defaultOpen: false,
-    noPadding: true
+    noPadding: true,
   });
 }
 
@@ -25,6 +26,8 @@ export function DashboardRoot() {
             <Routes>
               <Route path="/" component={DashboardPage} />
               <Route path="/create-store" component={CreateStorePage} />
+              <Route path="/create-product" component={CreateProductPage} />
+              <Route path="/products-list" component={ProductsListPage} />
             </Routes>
           </Router>
         </PocketbaseProvider>
