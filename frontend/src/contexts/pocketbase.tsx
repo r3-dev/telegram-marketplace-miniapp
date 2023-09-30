@@ -23,20 +23,20 @@ export function usePocketBase() {
   return context;
 }
 
-const pb = new PocketBase("http://127.0.0.1:3000")
-
 export const PocketbaseProvider: ParentComponent = (props) => {
   const sdk = useSDK();
 
+  const pb = new PocketBase("http://127.0.0.1:3000");
+
+  pb.beforeSend = function (url, options) {
+    options.headers = Object.assign({}, options.headers, {
+      "X-Init-Data": sdk.initDataRaw(),
+    });
+
+    return { url, options };
+  };
+
   createEffect(async () => {
-    pb.beforeSend = function (url, options) {
-      options.headers = Object.assign({}, options.headers, {
-        "X-Init-Data": sdk.initData(),
-      });
-
-      return { url, options };
-    };
-
     await pb
       .collection("users")
       .authWithPassword("USERNAMELESS", "PASSWORDLESS", {

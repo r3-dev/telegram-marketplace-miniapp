@@ -1,4 +1,10 @@
-import { Router, Routes, Route, hashIntegration } from "@solidjs/router";
+import {
+  Router,
+  Routes,
+  Route,
+  hashIntegration,
+  Navigate,
+} from "@solidjs/router";
 import { DashboardPage } from "./index";
 import { CreateStorePage } from "./create-store/create-store";
 import { PocketbaseProvider } from "../../contexts/pocketbase";
@@ -19,7 +25,12 @@ if (import.meta.env.DEV) {
 
 export function DashboardRoot() {
   return (
-    <SDKProvider initOptions={{ timeout: 3000, debug: true, cssVars: true }}>
+    <SDKProvider
+      initOptions={{
+        timeout: 3000,
+        cssVars: true,
+      }}
+    >
       <DisplayGate>
         <PocketbaseProvider>
           <Router source={hashIntegration()}>
@@ -28,6 +39,7 @@ export function DashboardRoot() {
               <Route path="/create-store" component={CreateStorePage} />
               <Route path="/create-product" component={CreateProductPage} />
               <Route path="/products-list" component={ProductsListPage} />
+              <Route path="*" element={<Navigate href="/" />} />
             </Routes>
           </Router>
         </PocketbaseProvider>
