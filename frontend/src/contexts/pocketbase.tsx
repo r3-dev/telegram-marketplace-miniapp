@@ -24,13 +24,13 @@ export function usePocketBase() {
 }
 
 export const PocketbaseProvider: ParentComponent = (props) => {
-  const sdk = useSDK();
+  const { initDataRaw } = useSDK();
 
   const pb = new PocketBase("http://127.0.0.1:3000");
 
   pb.beforeSend = function (url, options) {
     options.headers = Object.assign({}, options.headers, {
-      "X-Init-Data": sdk.initDataRaw(),
+      "X-Init-Data": initDataRaw(),
     });
 
     return { url, options };
@@ -41,7 +41,7 @@ export const PocketbaseProvider: ParentComponent = (props) => {
       .collection("users")
       .authWithPassword("USERNAMELESS", "PASSWORDLESS", {
         headers: {
-          "X-Init-Data": sdk.initDataRaw(),
+          "X-Init-Data": initDataRaw(),
         },
       });
   });

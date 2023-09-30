@@ -29,6 +29,7 @@ export function DashboardRoot() {
       initOptions={{
         timeout: 3000,
         cssVars: true,
+        debug: true,
       }}
     >
       <DisplayGate>

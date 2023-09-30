@@ -1,10 +1,9 @@
 import { A, useNavigate } from "@solidjs/router";
 import { type ListResult } from "pocketbase";
 import { Collections, type StoresResponse } from "../../../pocketbase/pb-types";
-import { For, createEffect, createSignal, onMount } from "solid-js";
+import { For, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { usePocketBase } from "../../contexts/pocketbase";
 import { useSDK } from "@twa.js/sdk-solid";
-import { MainButton } from "@twa.js/sdk";
 import { LottieAnimation } from "../lottie-animation";
 import "../../styles/index.css";
 
@@ -13,14 +12,14 @@ const storesDefaultValue = {
 } as ListResult<StoresResponse>;
 
 export function DashboardPage() {
-  const sdk = useSDK();
+  const { mainButton, backButton, initData } = useSDK();
   const pb = usePocketBase();
   const navigate = useNavigate();
 
   const [stores, setStores] =
     createSignal<ListResult<StoresResponse>>(storesDefaultValue);
 
-  onMount(async () => {
+  createEffect(async () => {
     const records = await pb
       .collection(Collections.Stores)
       .getList<StoresResponse>();
@@ -28,30 +27,32 @@ export function DashboardPage() {
     setStores(records);
   });
 
-  createEffect(() => {
-    const mainButton = new MainButton(
-      sdk.themeParams().buttonColor!,
-      true,
-      true,
-      false,
-      "Create store",
-      sdk.themeParams().buttonTextColor!
-    );
+  function goToCreateStore() {
+    navigate("/create-store");
+  }
 
-    function goToCreateStore() {
-      navigate("/create-store");
-      mainButton.off("click", goToCreateStore);
-      mainButton.hide();
-    }
+  onMount(() => {
+    mainButton().setText("Create store");
 
-    mainButton.on("click", goToCreateStore);
-    mainButton.show();
+    mainButton().on("click", goToCreateStore);
+
+    if (!mainButton().isVisible) mainButton().show();
+    if (backButton().isVisible) backButton().hide();
   });
+
+  onCleanup(() => {
+    mainButton().off("click", goToCreateStore);
+  });
+
+  function toggleMainButton() {
+    if (mainButton().isVisible) mainButton().hide();
+    else mainButton().show();
+  }
 
   return (
     <div>
       <h1 style={{ "font-weight": "bold", "font-size": "3rem" }}>
-        Hello, {sdk.initData()?.user?.firstName}
+        Hello, {initData()?.user?.firstName}
       </h1>
       <LottieAnimation
         animationData={location.origin + "/lottie/congratulations.json"}
@@ -66,6 +67,7 @@ export function DashboardPage() {
           </div>
         )}
       </For>
+      <button onClick={toggleMainButton}>TOGGLE</button>
     </div>
   );
 }

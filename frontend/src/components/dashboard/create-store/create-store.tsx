@@ -1,5 +1,5 @@
 import { useNavigate } from "@solidjs/router";
-import { createEffect, createSignal } from "solid-js";
+import { createMemo, createSignal, onCleanup, onMount } from "solid-js";
 import type {
   StoresRecord,
   StoresResponse,
@@ -8,13 +8,12 @@ import type {
 import { usePocketBase } from "../../../contexts/pocketbase";
 import { useSDK } from "@twa.js/sdk-solid";
 import { TextField, Image } from "@kobalte/core";
-import { MainButton } from "@twa.js/sdk";
 import "../../../styles/text-field.css";
 import "../../../styles/image.css";
 import "./create-store.css";
 
 export function CreateStorePage() {
-  const sdk = useSDK();
+  const { mainButton, backButton } = useSDK();
   const pb = usePocketBase();
   const navigate = useNavigate();
 
@@ -32,37 +31,31 @@ export function CreateStorePage() {
   const [storeDescription, setStoreDescription] = createSignal("");
   const [storeAvatar, setStoreAvatar] = createSignal("");
 
-  createEffect(() => {
-    const backButton = sdk.backButton();
+  function goToNext() {
+    console.log("goToNext");
 
-    function onBack() {
-      navigate("/");
-      backButton.off("click", onBack);
-      backButton.hide();
-    }
+    navigate("/create-product");
+  }
 
-    backButton.on("click", onBack);
-    backButton.show();
+  function onBack() {
+    console.log("onBack");
 
-    const mainButton = new MainButton(
-      sdk.themeParams().buttonColor!,
-      true,
-      true,
-      false,
-      "Next",
-      sdk.themeParams().buttonTextColor!
-    );
+    navigate("/");
+  }
 
-    function goToNext() {
-      navigate("/create-product");
-      backButton.off('click', onBack);
-      backButton.hide();
-      mainButton.off("click", goToNext);
-      mainButton.hide();
-    }
+  onMount(() => {
+    mainButton().setText("Next");
 
-    mainButton.on("click", goToNext);
-    mainButton.show();
+    mainButton().on("click", goToNext);
+    backButton().on("click", onBack);
+
+    if (!mainButton().isVisible) mainButton().show();
+    if (!backButton().isVisible) backButton().show();
+  });
+
+  onCleanup(() => {
+    mainButton().off("click", goToNext);
+    backButton().off("click", onBack);
   });
 
   return (
