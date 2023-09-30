@@ -1,6 +1,6 @@
 import { useSDK } from "@twa.js/sdk-solid";
 import { usePocketBase } from "../../../contexts/pocketbase";
-import { createMemo, onCleanup, onMount } from "solid-js";
+import { onCleanup, onMount } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import "./create-product.css";
 
@@ -10,8 +10,6 @@ export function CreateProductPage() {
   const navigate = useNavigate();
 
   function onBack() {
-    console.log("onBack");
-
     navigate("/create-store");
   }
 

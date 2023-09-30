@@ -1,5 +1,5 @@
 import { useNavigate } from "@solidjs/router";
-import { createMemo, createSignal, onCleanup, onMount } from "solid-js";
+import { createSignal, onCleanup, onMount } from "solid-js";
 import type {
   StoresRecord,
   StoresResponse,
@@ -32,14 +32,10 @@ export function CreateStorePage() {
   const [storeAvatar, setStoreAvatar] = createSignal("");
 
   function goToNext() {
-    console.log("goToNext");
-
     navigate("/create-product");
   }
 
   function onBack() {
-    console.log("onBack");
-
     navigate("/");
   }
 
@@ -58,30 +54,29 @@ export function CreateStorePage() {
     backButton().off("click", onBack);
   });
 
+  function onImageClick() {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".jpg, .jpeg, .png, .webp";
+    fileInput.click();
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files![0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        setStoreAvatar(reader.result as string);
+        console.log(reader.result);
+      };
+      reader.onerror = () => console.log(reader.error);
+    });
+  }
+
   return (
     <>
       <div class="flex justify-center">
-        <Image.Root
-          onClick={() => {
-            const fileInput = document.createElement("input");
-            fileInput.type = "file";
-            fileInput.accept = ".jpg, .jpeg, .png, .webp";
-            fileInput.click();
-
-            fileInput.addEventListener("change", () => {
-              const file = fileInput.files![0];
-              const reader = new FileReader();
-              reader.readAsDataURL(file);
-
-              reader.onload = () => {
-                setStoreAvatar(reader.result as string);
-                console.log(reader.result);
-              };
-              reader.onerror = () => console.log(reader.error);
-            });
-          }}
-          class="image"
-        >
+        <Image.Root onClick={onImageClick} class="image">
           <Image.Img class="image__img" src={storeAvatar()} />
           <Image.Root class="image">
             <Image.Fallback class="image__fallback">
