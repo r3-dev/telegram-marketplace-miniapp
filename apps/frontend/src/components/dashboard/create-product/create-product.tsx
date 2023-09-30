@@ -1,4 +1,4 @@
-import { useSDK } from "@twa.js/sdk-solid";
+import { useSDK } from "@tma.js/sdk-solid";
 import { usePocketBase } from "../../../contexts/pocketbase";
 import { onCleanup, onMount } from "solid-js";
 import { useNavigate } from "@solidjs/router";

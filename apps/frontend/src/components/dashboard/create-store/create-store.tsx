@@ -4,9 +4,9 @@ import type {
   StoresRecord,
   StoresResponse,
   UsersResponse,
-} from "../../../../pocketbase/pb-types";
+} from "../../../pocketbase/pb-types";
 import { usePocketBase } from "../../../contexts/pocketbase";
-import { useSDK } from "@twa.js/sdk-solid";
+import { useSDK } from "@tma.js/sdk-solid";
 import { TextField, Image } from "@kobalte/core";
 import "../../../styles/text-field.css";
 import "../../../styles/image.css";

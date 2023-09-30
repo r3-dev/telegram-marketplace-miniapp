@@ -1,4 +1,4 @@
-import { useSDKContext } from "@twa.js/sdk-solid";
+import { useSDKContext } from "@tma.js/sdk-solid";
 import { type ParentProps, createMemo, Switch, Match } from "solid-js";
 
 /**

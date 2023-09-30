@@ -1,9 +1,9 @@
 import { A, useNavigate } from "@solidjs/router";
 import { type ListResult } from "pocketbase";
-import { Collections, type StoresResponse } from "../../../pocketbase/pb-types";
+import { Collections, type StoresResponse } from "../../pocketbase/pb-types";
 import { For, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { usePocketBase } from "../../contexts/pocketbase";
-import { useSDK } from "@twa.js/sdk-solid";
+import { useSDK } from "@tma.js/sdk-solid";
 import { LottieAnimation } from "../lottie-animation";
 import "../../styles/index.css";
 
@@ -33,7 +33,6 @@ export function DashboardPage() {
 
   onMount(() => {
     mainButton().setText("Create store");
-
     mainButton().on("click", goToCreateStore);
 
     if (!mainButton().isVisible) mainButton().show();
@@ -45,12 +44,15 @@ export function DashboardPage() {
   });
 
   function toggleMainButton() {
-    if (mainButton().isVisible) mainButton().hide();
-    else mainButton().show();
+    if (mainButton().isVisible) {
+      mainButton().hide();
+    } else {
+      mainButton().show();
+    }
   }
 
   return (
-    <div>
+    <div class="flex justify-center">
       <h1 style={{ "font-weight": "bold", "font-size": "3rem" }}>
         Hello, {initData()?.user?.firstName}
       </h1>
@@ -63,11 +65,10 @@ export function DashboardPage() {
         {(record) => (
           <div>
             <h2>{record.name}</h2>
-            <A href={`/store/${record.id}`}>Go to store</A>
+            <A href={`/store/${record.id}`}>Go to store ({record.name})</A>
           </div>
         )}
       </For>
-      <button onClick={toggleMainButton}>TOGGLE</button>
     </div>
   );
 }

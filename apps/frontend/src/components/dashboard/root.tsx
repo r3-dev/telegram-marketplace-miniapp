@@ -9,7 +9,7 @@ import { DashboardPage } from "./index";
 import { CreateStorePage } from "./create-store/create-store";
 import { PocketbaseProvider } from "../../contexts/pocketbase";
 import { attachDevtoolsOverlay } from "@solid-devtools/overlay";
-import { SDKProvider } from "@twa.js/sdk-solid";
+import { SDKProvider } from "@tma.js/sdk-solid";
 import { DisplayGate } from "../twa-display-gate";
 import { CreateProductPage } from "./create-product/create-product";
 import { ProductsListPage } from "./products-list/products-list";

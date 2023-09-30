@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { useSDK } from "@twa.js/sdk-solid";
+import { useSDK } from "@tma.js/sdk-solid";
 import {
   createContext,
   createEffect,
