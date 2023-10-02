@@ -1,7 +1,7 @@
 export function MarketPage() {
   return (
     <div>
-      <h1>Market</h1>
+      <h1>Market Page</h1>
     </div>
   )
 }
