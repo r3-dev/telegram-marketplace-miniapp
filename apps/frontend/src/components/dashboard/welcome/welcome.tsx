@@ -31,7 +31,7 @@ export function Welcome() {
   })
 
   return (
-    <div class="flex justify-center flex-col py-4">
+    <div class="flex justify-center flex-col">
       <h1 class="text-lg text-center">
         Привет, {sdk.initData()?.user?.firstName}!
       </h1>

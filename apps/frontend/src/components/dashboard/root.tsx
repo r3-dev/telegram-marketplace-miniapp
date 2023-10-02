@@ -14,7 +14,9 @@ import { CreateProductPage } from './create-product/create-product'
 import { CreateStorePage } from './create-store/create-store'
 import { DashboardPage } from './index'
 import { ProductsListPage } from './products-list/products-list'
+import { StoreActions } from './store-actions/store-actions'
 import { Welcome } from './welcome/welcome'
+
 import '../../styles/global.css'
 
 if (import.meta.env.DEV) {
@@ -41,7 +43,7 @@ export function DashboardRoot() {
             <Routes>
               <Route
                 path="/"
-                component={Welcome}
+                component={StoreActions}
               />
               <Route
                 path="/create-store"
