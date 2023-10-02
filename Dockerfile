@@ -6,7 +6,7 @@ COPY . /app
 WORKDIR /app
 
 FROM base AS build-frontend
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm run ci:prod
 RUN pnpm run -r build
 
 FROM base AS frontend

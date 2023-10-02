@@ -6,6 +6,8 @@
   "author": "milanjrodd <milanrodd@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "ci": "pnpm install --frozen-lock",
+    "ci:prod": "pnpm install --frozen-lock --prod",
     "dev": "pnpm --filter=./apps/* run dev",
     "build": "pnpm --filter=./apps/* run build",
     "ngrok": "npx ngrok http 3000",
