@@ -1,7 +1,6 @@
 ---
 export function getStaticPaths() {
   // we need to define all the possible solid routes so astro knows to redirect here
-  // our app has 2 routes, the root page and the page1 page
   return [
     { params: { route: undefined }},
     { params: { route: "create-store" }},
