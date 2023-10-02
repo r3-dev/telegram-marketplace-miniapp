@@ -1,0 +1,9 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "go run . serve",
+    "prepare": "go mod tidy && go mod download"
+  }
+}

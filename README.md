@@ -15,7 +15,7 @@ This is a fullstack template for blazingly fast MVP development. It is focused o
 Install dependencies with pnpm
 
 ```bash
-  pnpm
+pnpm install --frozen-lockfile
 ```
 
 ## Run webhook proxy server
@@ -29,5 +29,5 @@ pnpm ngrok
 Run both backend and frontend on port 3000
 
 ```bash
-  pnpm dev
+pnpm dev
 ```

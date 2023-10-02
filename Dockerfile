@@ -1,14 +1,14 @@
 FROM node:lts-alpine as build-frontend
 WORKDIR /app
-COPY ./frontend/package*.json ./
+COPY ./apps/frontend/package*.json ./
 RUN yarn
-COPY ./frontend/ .
+COPY ./apps/frontend/ .
 RUN yarn build
 
 FROM golang:1.19 AS build-backend
 
 RUN mkdir /app
-ADD ./backend /app
+ADD ./apps/backend /app
 COPY --from=build-frontend /app/dist /app/pb_public
 WORKDIR /app
 

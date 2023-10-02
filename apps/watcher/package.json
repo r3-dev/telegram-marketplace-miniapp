@@ -1,0 +1,13 @@
+{
+  "name": "watcher",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node watcher.js",
+    "pocketbase-typegen": "pocketbase-typegen --db ../backend/pb_data/data.db --out ../frontend/src/pocketbase/pb-types.ts"
+  },
+  "devDependencies": {
+    "pocketbase-typegen": "^1.1.13"
+  }
+}

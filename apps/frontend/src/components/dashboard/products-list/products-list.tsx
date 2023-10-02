@@ -1,9 +1,5 @@
 import './products-list.css'
 
 export function ProductsListPage() {
-  return (
-    <div>
-
-    </div>
-  )
+  return <div></div>
 }
