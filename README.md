@@ -26,8 +26,19 @@ pnpm ngrok
 
 ## Run Locally
 
-Run both backend and frontend on port 3000
+Run backend, frontend and reverse proxy with one command.
 
 ```bash
 pnpm dev
 ```
+
+We use reverse proxy only in dev mode to exclude cors errors on the client.
+Backend port: 8090
+Frontend port: 4321
+Reverse proxy port: 3000
+
+## Telegram settings
+
+Use telegram test server for the developing purpose:
+- @intgmarketbot for customers
+- @intgstorebot for sellers
