@@ -18,6 +18,7 @@ import { StoreActions } from './store-actions/store-actions'
 import { Welcome } from './welcome/welcome'
 
 import '../../styles/global.css'
+import { Success, SuccessMock } from './success/success'
 
 if (import.meta.env.DEV) {
   attachDevtoolsOverlay()
@@ -43,7 +44,7 @@ export function DashboardRoot() {
             <Routes>
               <Route
                 path="/"
-                component={DashboardPage}
+                component={SuccessMock}
               />
               <Route
                 path="/create-store"
