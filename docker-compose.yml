@@ -8,7 +8,7 @@ services:
     ports:
       - "${PORT}:${PORT}"
     volumes:
-      - pocketbase-data:/pb_data
+      - pocketbase-data:/dist/pb_data
     healthcheck: #optional (recommended) since v0.10.0
       test: wget --no-verbose --tries=1 --spider http://localhost:${PORT}/api/health || exit 1
       interval: 5s
