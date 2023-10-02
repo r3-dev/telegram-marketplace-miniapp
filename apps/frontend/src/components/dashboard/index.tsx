@@ -8,8 +8,6 @@ import { Collections } from '../../pocketbase/pb-types'
 import { LottieAnimation } from '../lottie-animation'
 import type { StoresResponse } from '../../pocketbase/pb-types'
 
-import '../../styles/index.css'
-
 const storesDefaultValue = {
   items: [] as StoresResponse[]
 } as ListResult<StoresResponse>

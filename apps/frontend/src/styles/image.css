@@ -1,16 +1,3 @@
-.image {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  overflow: hidden;
-  user-select: none;
-  width: 128px;
-  height: 128px;
-  border-radius: 100%;
-  background-color: var(--tg-theme-secondary-bg-color);
-}
-
 .image__img {
   width: 100%;
   height: 100%;

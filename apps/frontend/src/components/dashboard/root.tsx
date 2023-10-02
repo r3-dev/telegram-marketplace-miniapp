@@ -14,6 +14,8 @@ import { CreateProductPage } from './create-product/create-product'
 import { CreateStorePage } from './create-store/create-store'
 import { DashboardPage } from './index'
 import { ProductsListPage } from './products-list/products-list'
+import { Welcome } from './welcome/welcome'
+import '../../styles/global.css'
 
 if (import.meta.env.DEV) {
   attachDevtoolsOverlay()
@@ -39,7 +41,7 @@ export function DashboardRoot() {
             <Routes>
               <Route
                 path="/"
-                component={DashboardPage}
+                component={Welcome}
               />
               <Route
                 path="/create-store"
