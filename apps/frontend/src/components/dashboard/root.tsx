@@ -1,10 +1,4 @@
-import {
-  Router,
-  Routes,
-  Route,
-  hashIntegration,
-  Navigate,
-} from "@solidjs/router";
+import { Router, Routes, Route, hashIntegration, Navigate } from "@solidjs/router";
 import { DashboardPage } from "./index";
 import { CreateStorePage } from "./create-store/create-store";
 import { PocketbaseProvider } from "../../contexts/pocketbase";

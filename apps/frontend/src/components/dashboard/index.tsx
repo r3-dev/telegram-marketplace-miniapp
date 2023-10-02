@@ -43,14 +43,6 @@ export function DashboardPage() {
     mainButton().off("click", goToCreateStore);
   });
 
-  function toggleMainButton() {
-    if (mainButton().isVisible) {
-      mainButton().hide();
-    } else {
-      mainButton().show();
-    }
-  }
-
   return (
     <div class="flex justify-center">
       <h1 style={{ "font-weight": "bold", "font-size": "3rem" }}>
