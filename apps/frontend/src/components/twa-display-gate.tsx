@@ -1,20 +1,21 @@
-import { useSDKContext } from "@tma.js/sdk-solid";
-import { type ParentProps, createMemo, Switch, Match } from "solid-js";
+import { useSDKContext } from '@tma.js/sdk-solid'
+import { createMemo, Match, Switch } from 'solid-js'
+import type { ParentProps } from 'solid-js'
 
 /**
  * Component responsible for controlling the process of application display.
  */
 export function DisplayGate(props: ParentProps) {
-  const { loading, error } = useSDKContext();
+  const { loading, error } = useSDKContext()
   const errorMessage = createMemo<null | string>(() => {
-    const err = error();
+    const err = error()
 
     if (!err) {
-      return null;
+      return null
     }
 
-    return err instanceof Error ? err.message : "Unknown error";
-  });
+    return err instanceof Error ? err.message : 'Unknown error'
+  })
 
   return (
     <Switch fallback={props.children}>
@@ -31,5 +32,5 @@ export function DisplayGate(props: ParentProps) {
         <div>Loading..</div>
       </Match>
     </Switch>
-  );
+  )
 }

@@ -8,9 +8,11 @@
   "scripts": {
     "dev": "pnpm --filter=./apps/* run dev",
     "ngrok": "npx ngrok http 3000",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json}\"",
     "install-sqlite-mac-m1": "npm install -d sqlite3 --build-from-source --target_arch=arm64 --fallback-to-build && rm -rf package-lock.json"
   },
   "devDependencies": {
+    "@crashmax/prettier-config": "^4.1.0",
     "@types/node": "18",
     "ngrok": "^5.0.0-beta.2",
     "sqlite3": "^5.1.6"
