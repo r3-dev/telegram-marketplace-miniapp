@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "pnpm --filter=./apps/* run dev",
+    "build": "pnpm --filter=./apps/* run build",
     "ngrok": "npx ngrok http 3000",
     "format": "prettier --write \"**/*.{js,ts,tsx,json}\"",
     "install-sqlite-mac-m1": "npm install -d sqlite3 --build-from-source --target_arch=arm64 --fallback-to-build && rm -rf package-lock.json"

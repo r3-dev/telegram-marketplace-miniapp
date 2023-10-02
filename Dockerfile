@@ -1,20 +1,29 @@
-FROM node:lts-alpine as build-frontend
+FROM node:20-slim as base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+COPY . /app
 WORKDIR /app
-COPY ./apps/frontend/package*.json ./
-RUN yarn
-COPY ./apps/frontend/ .
-RUN yarn build
 
-FROM golang:1.19 AS build-backend
+FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
+FROM base AS build-frontend
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm run -r build
+
+FROM base AS frontend
+COPY --from=prod-deps /app/apps/frontend/node_modules/ /app/apps/frontend/node_modules
+COPY --from=build-frontend /app/apps/frontend/dist /app/apps/frontend/dist
+
+FROM golang:1.21.1 AS build-backend
 RUN mkdir /app
 ADD ./apps/backend /app
-COPY --from=build-frontend /app/dist /app/pb_public
+COPY --from=frontend /app/apps/frontend/dist /app/pb_public
 WORKDIR /app
-
-RUN CGO_ENABLED=0 GOOS=linux go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -o dist/main.bin .
 
 FROM alpine:latest AS production
 COPY --from=build-backend /app .
 EXPOSE ${PORT}
-CMD ["./main", "serve", "--http=0.0.0.0:8090"]
+CMD ["./dist/main.bin", "serve", "--http=0.0.0.0:$PORT"]

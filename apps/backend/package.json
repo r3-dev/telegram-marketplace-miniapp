@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "go run . serve",
-    "prepare": "go mod tidy && go mod download"
+    "prepare:dev": "go mod tidy && go mod download"
   }
 }
