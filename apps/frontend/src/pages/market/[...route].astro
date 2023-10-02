@@ -1,0 +1,15 @@
+---
+export function getStaticPaths() {
+  // we need to define all the possible solid routes so astro knows to redirect here
+  return [
+    { params: { route: undefined }},
+  ];
+}
+
+import Layout from "../../layouts/Layout.astro";
+import { MarketRoot } from "../../components/market/root"
+
+---
+<Layout title="Market">
+  <MarketRoot client:only="solid-js"/>
+</Layout>
