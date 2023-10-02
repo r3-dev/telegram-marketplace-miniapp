@@ -1,12 +1,41 @@
 import { TextField } from '@kobalte/core'
-import { createSignal } from 'solid-js'
+import { useSDK } from '@tma.js/sdk-solid'
+import { createSignal, onCleanup, onMount } from 'solid-js'
 
 import './create-product.css'
 
+import { useNavigate } from '@solidjs/router'
+
 export function CreateProductPage() {
+  const { mainButton, backButton } = useSDK()
   const [productName, setProductName] = createSignal('')
   const [productDescription, setProductDescription] = createSignal('')
   const [productPrice, setProductPrice] = createSignal('')
+
+  const navigate = useNavigate()
+
+  function goToNext() {
+    navigate('/dashboard/products-list')
+  }
+
+  function onBack() {
+    navigate('/dashboard/create-store')
+  }
+
+  onMount(() => {
+    mainButton().setText('Next')
+
+    mainButton().on('click', goToNext)
+    backButton().on('click', onBack)
+
+    if (!mainButton().isVisible) mainButton().show()
+    if (!backButton().isVisible) backButton().show()
+  })
+
+  onCleanup(() => {
+    mainButton().off('click', goToNext)
+    backButton().off('click', onBack)
+  })
 
   return (
     <div class="create-store__form">

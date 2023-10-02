@@ -34,11 +34,11 @@ export function CreateStorePage() {
   const [storeAvatar, setStoreAvatar] = createSignal('')
 
   function goToNext() {
-    navigate('/create-product')
+    navigate('/dashboard/create-product')
   }
 
   function onBack() {
-    navigate('/')
+    navigate('/dashboard')
   }
 
   onMount(() => {

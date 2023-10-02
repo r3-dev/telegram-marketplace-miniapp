@@ -18,6 +18,7 @@ import { StoreActions } from './store-actions/store-actions'
 import { Welcome } from './welcome/welcome'
 
 import '../../styles/global.css'
+
 import { Success, SuccessMock } from './success/success'
 
 if (import.meta.env.DEV) {
@@ -40,28 +41,34 @@ export function DashboardRoot() {
     >
       <DisplayGate>
         <PocketbaseProvider>
-          <Router source={hashIntegration()}>
+          <Router>
             <Routes>
-              <Route
-                path="/"
-                component={SuccessMock}
-              />
-              <Route
-                path="/create-store"
-                component={CreateStorePage}
-              />
-              <Route
-                path="/create-product"
-                component={CreateProductPage}
-              />
-              <Route
-                path="/products-list"
-                component={ProductsListPage}
-              />
-              <Route
-                path="*"
-                element={<Navigate href="/" />}
-              />
+              <Route path="/dashboard">
+                <Route
+                  path="/"
+                  component={Welcome}
+                />
+                <Route
+                  path="/create-store"
+                  component={CreateStorePage}
+                />
+                <Route
+                  path="/create-product"
+                  component={CreateProductPage}
+                />
+                <Route
+                  path="/products-list"
+                  component={ProductsListPage}
+                />
+                <Route
+                  path="/success"
+                  component={SuccessMock}
+                />
+                <Route
+                  path="*"
+                  element={<Navigate href="/" />}
+                />
+              </Route>
             </Routes>
           </Router>
         </PocketbaseProvider>

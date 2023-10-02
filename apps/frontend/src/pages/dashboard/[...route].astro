@@ -1,0 +1,20 @@
+---
+export function getStaticPaths() {
+  // we need to define all the possible solid routes so astro knows to redirect here
+  // our app has 2 routes, the root page and the page1 page
+  return [
+    { params: { route: undefined }},
+    { params: { route: "create-store" }},
+    { params: { route: "create-product" }},
+    { params: { route: "product-list" }},
+    { params: { route: "success" }},
+  ];
+}
+
+import Layout from "../../layouts/Layout.astro";
+import { DashboardRoot } from "../../components/dashboard/root";
+
+---
+<Layout title="Dashboard">
+  <DashboardRoot client:only="solid-js"/>
+</Layout>

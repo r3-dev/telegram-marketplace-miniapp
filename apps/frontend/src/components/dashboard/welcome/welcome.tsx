@@ -1,9 +1,11 @@
 import { Image } from '@kobalte/core'
 import { useSDK } from '@tma.js/sdk-solid'
-import { For, onMount } from 'solid-js'
+import { For, onCleanup, onMount } from 'solid-js'
 
 import '../../../styles/image.css'
 import './welcome.css'
+
+import { useNavigate } from '@solidjs/router'
 
 const MOCK_STORES = [
   {
@@ -25,9 +27,22 @@ const MOCK_STORES = [
 
 export function Welcome() {
   const sdk = useSDK()
+  const navigate = useNavigate()
+
+  function handleCreateStore() {
+    navigate('/dashboard/create-store')
+  }
 
   onMount(() => {
-    sdk.mainButton().setText('Создать магазин').show()
+    sdk.mainButton().on('click', handleCreateStore)
+    sdk.mainButton().setText('Создать магазин')
+
+    if (!sdk.mainButton().isVisible) sdk.mainButton().show()
+    if (sdk.backButton().isVisible) sdk.backButton().hide()
+  })
+
+  onCleanup(() => {
+    sdk.mainButton().off('click', handleCreateStore)
   })
 
   return (

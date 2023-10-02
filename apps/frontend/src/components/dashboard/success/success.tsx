@@ -8,6 +8,7 @@ import { LottieAnimation } from '../../lottie-animation'
 interface SuccessProps {
   text: string
   nextButtonLink: string
+  nextButtonText: string
 }
 
 export const Success: Component<SuccessProps> = (props) => {
@@ -19,8 +20,11 @@ export const Success: Component<SuccessProps> = (props) => {
   }
 
   onMount(() => {
-    sdk.mainButton().setText('Далее').show()
     sdk.mainButton().on('click', goToNext)
+    sdk.mainButton().setText(props.nextButtonText)
+
+    if (!sdk.mainButton().isVisible) sdk.mainButton().show()
+    if (sdk.backButton().isVisible) sdk.backButton().hide()
   })
 
   onCleanup(() => {
@@ -42,8 +46,9 @@ export const Success: Component<SuccessProps> = (props) => {
 export function SuccessMock() {
   return (
     <Success
-      nextButtonLink="/"
-      text="Мы почти закончили, остался последний шаг!"
+      nextButtonLink="/dashboard"
+      nextButtonText="На главную"
+      text="Поздравляем! Ваш магазин успешно создан!"
     />
   )
 }
