@@ -38,11 +38,11 @@ importers:
         specifier: ^0.8.3
         version: 0.8.3(solid-js@1.7.12)
       '@tma.js/sdk':
-        specifier: ^0.11.3
-        version: 0.11.3
+        specifier: ^0.11.5
+        version: 0.11.5
       '@tma.js/sdk-solid':
-        specifier: ^0.1.3
-        version: 0.1.3(solid-js@1.7.12)
+        specifier: ^0.1.5
+        version: 0.1.5(solid-js@1.7.12)
       astro:
         specifier: ^3.2.0
         version: 3.2.0(@types/node@18.18.1)
@@ -1443,72 +1443,72 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tma.js/bridge@1.3.2:
-    resolution: {integrity: sha512-6csZp2VLRHlNOLOH9UK5A3cAMf0X8tYPb/xvwAlvtlOiKR73RDqDYLEXCFlvfCUrf1SQBnkoOllULeN69ebghw==}
+  /@tma.js/bridge@1.3.4:
+    resolution: {integrity: sha512-YkRtyDZCnNC+Cca1elsA4NvKBXJ+CAPIB9FV1KIvTjaJPS3uVb7//LjMXD1i7u5Q2ZgGJ5idule8b3lfdpoKbw==}
     dependencies:
-      '@tma.js/colors': 0.0.2
-      '@tma.js/event-emitter': 0.0.2
-      '@tma.js/logger': 0.0.1
-      '@tma.js/parsing': 0.0.2
-      '@tma.js/util-types': 0.0.2
-      '@tma.js/utils': 0.5.2
+      '@tma.js/colors': 0.0.3
+      '@tma.js/event-emitter': 0.0.3
+      '@tma.js/logger': 0.0.2
+      '@tma.js/parsing': 0.0.3
+      '@tma.js/util-types': 0.0.3
+      '@tma.js/utils': 0.5.3
     dev: false
 
-  /@tma.js/colors@0.0.2:
-    resolution: {integrity: sha512-U73kFp7lluKA6eLHGHtDyGO5w4rBZ/UzsbRVvVmL5vNMxcyG3cSEnSLaILxm8qYZrIqAAx1ilQlUaBLsDDmH+w==}
+  /@tma.js/colors@0.0.3:
+    resolution: {integrity: sha512-UM1P1KIleo8xv9Loz3vMuUBaUmVVWCLqIctDVV5lwvK4X75WFgtTpmiy+BLEayYMlZ0fZTk6poIvl/NZMdOl2Q==}
     dev: false
 
-  /@tma.js/event-emitter@0.0.2:
-    resolution: {integrity: sha512-qdbOwEHNPStyL8D/2s9HGC2Ndsg8apd7J7Vv9vwjQ7BfTUkI1NLWnIUV62g/OE1D0KZ8/pZ6IzEOKLwjEf6dmg==}
+  /@tma.js/event-emitter@0.0.3:
+    resolution: {integrity: sha512-d1hYJQYsNO5zaX1TWjMtcPZrYjIoF2tyJVlsa9eB8tV1wrXcrznhun+v4yy9sJ4SfoZLAAM82qt+/ovGM++TiQ==}
     dependencies:
-      '@tma.js/util-types': 0.0.2
+      '@tma.js/util-types': 0.0.3
     dev: false
 
-  /@tma.js/init-data@0.2.14:
-    resolution: {integrity: sha512-ZUtziWKBDSKErqxizlFlLqJc3o1nkUnh99ppO0TSnR842YSUinA907B/eJK2V9VLrGWQx2Fd/NvWpyj9NGIPXQ==}
+  /@tma.js/init-data@0.2.15:
+    resolution: {integrity: sha512-js2YdsXBiDAjriZWp9RP68iONhXZoYDFmQ9guwrF/zHTNf+fe0k+HzgSJbv40mjOASqvKBNuf7EWJbCcSYRthQ==}
     dependencies:
-      '@tma.js/parsing': 0.0.2
+      '@tma.js/parsing': 0.0.3
     dev: false
 
-  /@tma.js/logger@0.0.1:
-    resolution: {integrity: sha512-79jpTOViqX9ySqmR0+GsrfEpMewhlQecEklyLrOkpX2O9SjLNrsnFk3P1ZlEWy/tFg3mQnEACHZSdEH7mjoL5g==}
+  /@tma.js/logger@0.0.2:
+    resolution: {integrity: sha512-rRR1WjgM8nCOpMP6Sp8ro/DE5k713RLIcbIKnC1FrulOCLt9btYQHNnBep+rczpcu0TBquB8iHhsGQ/blfi1Jw==}
     dev: false
 
-  /@tma.js/parsing@0.0.2:
-    resolution: {integrity: sha512-eukhT+3jmNV3G2/ek4TlCnNhTHIWwcOkjUdd6hct36IC7ttDORWoJ2iPbx1BllmWGaVHtzQkVPb25xt0nBXg6w==}
+  /@tma.js/parsing@0.0.3:
+    resolution: {integrity: sha512-OyCHjxNkPznfRNgLxaHuUbS/4P4WdYifBOcKaWrh3ONiVTU9a436RPgr21t51xFdz1LjRK0nqlgoWvecA9sXmQ==}
     dependencies:
-      '@tma.js/colors': 0.0.2
-      '@tma.js/util-types': 0.0.2
+      '@tma.js/colors': 0.0.3
+      '@tma.js/util-types': 0.0.3
     dev: false
 
-  /@tma.js/sdk-solid@0.1.3(solid-js@1.7.12):
-    resolution: {integrity: sha512-08XQZX+VFMjnNeEkEfkRaKZrlaa9NUNguAKkE79bHAvSgWTQMxRzKt8xnQfM2aXO/KhSErHguu3A3yrcjq2+YQ==}
+  /@tma.js/sdk-solid@0.1.5(solid-js@1.7.12):
+    resolution: {integrity: sha512-8sCyk5RkV2Ujs9Tp9tcZSP81Z7jiHzlI+ZLWNOBWzS9qIwctcC9Uf+fxztZk+SxmKqk3lajWb7UADIPf+f4Bhg==}
     peerDependencies:
       solid-js: ^1.0.0
     dependencies:
-      '@tma.js/sdk': 0.11.3
-      '@tma.js/utils': 0.5.2
+      '@tma.js/sdk': 0.11.5
+      '@tma.js/utils': 0.5.3
       solid-js: 1.7.12
     dev: false
 
-  /@tma.js/sdk@0.11.3:
-    resolution: {integrity: sha512-w6ZnOjpY5D8BWxxIP8w+2rN9/GsGbPFVkvKuGUfFL4iaXHMKj/mLNa7KpE9x+8amDY9TFeGUow9YFpntQy5Vdw==}
+  /@tma.js/sdk@0.11.5:
+    resolution: {integrity: sha512-HpIEBBjrMM5oUuwOge0KS/wvgqehGIGM50N5d8Ka9AQZ6yblEavxBoL/lTqLnBjZspZ84Rh5JtRYRb5At1h3Ng==}
     dependencies:
-      '@tma.js/bridge': 1.3.2
-      '@tma.js/colors': 0.0.2
-      '@tma.js/event-emitter': 0.0.2
-      '@tma.js/init-data': 0.2.14
-      '@tma.js/parsing': 0.0.2
-      '@tma.js/util-types': 0.0.2
-      '@tma.js/utils': 0.5.2
+      '@tma.js/bridge': 1.3.4
+      '@tma.js/colors': 0.0.3
+      '@tma.js/event-emitter': 0.0.3
+      '@tma.js/init-data': 0.2.15
+      '@tma.js/parsing': 0.0.3
+      '@tma.js/util-types': 0.0.3
+      '@tma.js/utils': 0.5.3
     dev: false
 
-  /@tma.js/util-types@0.0.2:
-    resolution: {integrity: sha512-QMIlsLPHfJFmo2+Csc2RN90cLLeVf0s83qbQJA7rDd0OwYVdeWZ3vPC/DSZUGqRLHYzsD4sxjpu3HoUfhqSFbg==}
+  /@tma.js/util-types@0.0.3:
+    resolution: {integrity: sha512-9hYutR7Ee4F3dgZlztTL31w8ljs3loRQ0pnzox0EG/Ey2CmbXTbLc9UIJuXzyKBiJKNJEoB3NNoAIy7mBaLRIQ==}
     dev: false
 
-  /@tma.js/utils@0.5.2:
-    resolution: {integrity: sha512-JCSkK8V1yNGlm6lbP6N9mKSa0OFfNlv4urWljDze4mebSkspCrQKuJRhz71V+ft+3UUco4jfk5DYhv2Qvs+saQ==}
+  /@tma.js/utils@0.5.3:
+    resolution: {integrity: sha512-aXcw78lQoor4Kcs57r+x8/P4Pb4gi0cBCFGjsHHYMSBpmLNbtgwbXT48YUhN3gDEeS3tHsMclvC1FtEDsv0AOw==}
     dev: false
 
   /@tootallnate/once@1.1.2:
