@@ -30,6 +30,8 @@ export function Welcome() {
   const navigate = useNavigate()
 
   function handleCreateStore() {
+    sdk.mainButton().disable()
+
     navigate('/dashboard/create-store')
   }
 
@@ -39,6 +41,8 @@ export function Welcome() {
 
     if (!sdk.mainButton().isVisible) sdk.mainButton().show()
     if (sdk.backButton().isVisible) sdk.backButton().hide()
+
+    if (!sdk.mainButton().isEnabled) sdk.mainButton().enable()
   })
 
   onCleanup(() => {

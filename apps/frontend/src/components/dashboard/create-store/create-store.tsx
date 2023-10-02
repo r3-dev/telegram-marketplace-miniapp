@@ -34,6 +34,8 @@ export function CreateStorePage() {
   const [storeAvatar, setStoreAvatar] = createSignal('')
 
   function goToNext() {
+    mainButton().disable()
+
     navigate('/dashboard/create-product')
   }
 
@@ -49,6 +51,8 @@ export function CreateStorePage() {
 
     if (!mainButton().isVisible) mainButton().show()
     if (!backButton().isVisible) backButton().show()
+
+    if (!mainButton().isEnabled) mainButton().enable()
   })
 
   onCleanup(() => {

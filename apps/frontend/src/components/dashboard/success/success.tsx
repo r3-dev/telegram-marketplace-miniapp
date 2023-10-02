@@ -16,6 +16,8 @@ export const Success: Component<SuccessProps> = (props) => {
   const navigate = useNavigate()
 
   function goToNext() {
+    sdk.mainButton().disable()
+
     navigate(props.nextButtonLink)
   }
 
@@ -25,6 +27,8 @@ export const Success: Component<SuccessProps> = (props) => {
 
     if (!sdk.mainButton().isVisible) sdk.mainButton().show()
     if (sdk.backButton().isVisible) sdk.backButton().hide()
+
+    if (!sdk.mainButton().isEnabled) sdk.mainButton().enable()
   })
 
   onCleanup(() => {

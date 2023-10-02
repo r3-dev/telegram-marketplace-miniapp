@@ -15,6 +15,8 @@ export function CreateProductPage() {
   const navigate = useNavigate()
 
   function goToNext() {
+    mainButton().disable()
+
     navigate('/dashboard/products-list')
   }
 
@@ -30,6 +32,8 @@ export function CreateProductPage() {
 
     if (!mainButton().isVisible) mainButton().show()
     if (!backButton().isVisible) backButton().show()
+
+    if (!mainButton().isEnabled) mainButton().enable()
   })
 
   onCleanup(() => {
