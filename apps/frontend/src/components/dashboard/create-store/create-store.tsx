@@ -112,6 +112,7 @@ export function CreateStorePage() {
           <TextField.Label class="text-field__label">Name</TextField.Label>
           <TextField.Input
             class="text-field__input"
+            autocomplete="off"
             value={storeName()}
             onChange={(e) => setStoreName(e.currentTarget.value)}
           />

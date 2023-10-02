@@ -1,6 +1,4 @@
 import { Button } from '@kobalte/core'
-import { useSDK } from '@tma.js/sdk-solid'
-import { onMount } from 'solid-js'
 
 import '../../../styles/button.css'
 

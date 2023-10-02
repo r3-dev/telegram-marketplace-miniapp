@@ -43,7 +43,7 @@ export function DashboardRoot() {
             <Routes>
               <Route
                 path="/"
-                component={StoreActions}
+                component={DashboardPage}
               />
               <Route
                 path="/create-store"
