@@ -1,11 +1,5 @@
 import { attachDevtoolsOverlay } from '@solid-devtools/overlay'
-import {
-  hashIntegration,
-  Navigate,
-  Route,
-  Router,
-  Routes
-} from '@solidjs/router'
+import { Navigate, Route, Router, Routes } from '@solidjs/router'
 import { SDKProvider } from '@tma.js/sdk-solid'
 
 import { PocketbaseProvider } from '../../contexts/pocketbase'
