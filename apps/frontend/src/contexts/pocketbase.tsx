@@ -3,6 +3,8 @@ import PocketBase from 'pocketbase'
 import { createContext, createEffect, useContext } from 'solid-js'
 import type { ParentComponent } from 'solid-js'
 
+const pb_url = import.meta.env.PUBLIC_POCKETBASE_URL
+
 const PocketBaseContext = createContext<PocketBase>(undefined, {
   name: 'PocketBaseContext'
 })
@@ -21,7 +23,7 @@ export function usePocketBase() {
 
 export const PocketbaseProvider: ParentComponent = (props) => {
   const sdk = useSDK()
-  const pb = new PocketBase('http://127.0.0.1:3000')
+  const pb = new PocketBase(pb_url)
 
   pb.beforeSend = function (url, options) {
     options.headers = Object.assign({}, options.headers, {
