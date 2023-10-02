@@ -1,9 +1,9 @@
 version: "3.7"
 
 services:
-  tg-miniapp-contest:
+  app:
     build: .
-    container_name: tg-miniapp-contest
+    container_name: app
     restart: unless-stopped
     ports:
       - "${PORT}:${PORT}"

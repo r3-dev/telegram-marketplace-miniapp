@@ -23,16 +23,18 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	app := pocketbase.New()
-
 	// loosely check if it was executed using "go run"
 	exePath := os.Args[0]
 	isDevMode := strings.HasPrefix(exePath, os.TempDir()) || strings.Contains(exePath, "debug")
+
+	if isDevMode {
+		err := godotenv.Load("../../.env")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	app := pocketbase.New()
 
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
 		// enable auto creation of migration files when making collection changes in the Admin UI
