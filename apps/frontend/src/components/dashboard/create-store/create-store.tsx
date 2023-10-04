@@ -1,9 +1,10 @@
 import { Image, TextField } from '@kobalte/core'
-import { useNavigate } from '@solidjs/router'
+import { useNavigate, useParams, useRouteData } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
 import { usePocketBase } from '../../../contexts/pocketbase'
+import { Collections } from '../../../pocketbase/pb-types'
 import type {
   StoresRecord,
   StoresResponse,
@@ -15,28 +16,39 @@ import '../../../styles/image.css'
 import './create-store.css'
 
 export function CreateStorePage() {
-  const { mainButton, backButton } = useSDK()
-  const pb = usePocketBase()
-  const navigate = useNavigate()
-
-  // async function submitHandler(event: Event) {
-  //   event.preventDefault();
-  //   const data: StoresRecord = {
-  //     name: "FOO",
-  //     user: (pb.authStore.model as UsersResponse).id,
-  //     field: ""
-  //   };
-  //   await pb.collection("stores").create<StoresResponse>(data);
-  // }
-
   const [storeName, setStoreName] = createSignal('')
   const [storeDescription, setStoreDescription] = createSignal('')
   const [storeAvatar, setStoreAvatar] = createSignal('')
 
-  function goToNext() {
-    mainButton().disable()
+  const { mainButton, backButton } = useSDK()
+  const pb = usePocketBase()
+  const navigate = useNavigate()
 
-    navigate('/dashboard/create-product')
+  async function goToNext() {
+    mainButton().showProgress().disable()
+
+    try {
+      if (storeName().length === 0) throw new Error('Store name is required')
+
+      const data: StoresRecord = {
+        name: storeName(),
+        user: (pb.authStore.model as UsersResponse).id,
+        description: storeDescription()
+      }
+
+      const response = await pb
+        .collection(Collections.Stores)
+        .create<StoresResponse>(data)
+        .catch((err) => {
+          throw err
+        })
+
+      navigate(`/dashboard`)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      mainButton().hideProgress().enable()
+    }
   }
 
   function onBack() {
@@ -53,6 +65,7 @@ export function CreateStorePage() {
     if (!backButton().isVisible) backButton().show()
 
     if (!mainButton().isEnabled) mainButton().enable()
+    if (!mainButton().isProgressVisible) mainButton().hideProgress()
   })
 
   onCleanup(() => {
