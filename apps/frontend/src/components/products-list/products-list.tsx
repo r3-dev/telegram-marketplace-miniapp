@@ -5,7 +5,7 @@ import './products-list.css'
 import { useSDK } from '@tma.js/sdk-solid'
 import { onCleanup, onMount } from 'solid-js'
 
-export function ProductsListPage() {
+export function ProductsList() {
   const { mainButton, backButton } = useSDK()
   const navigate = useNavigate()
 

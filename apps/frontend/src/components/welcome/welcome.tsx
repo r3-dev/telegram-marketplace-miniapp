@@ -33,7 +33,7 @@ export function Welcome() {
   function handleCreateStore() {
     sdk.mainButton().disable()
 
-    navigate('/dashboard/create-store')
+    navigate('/dashboard/store/create')
   }
 
   createEffect(async () => {
@@ -64,6 +64,10 @@ export function Welcome() {
     sdk.mainButton().off('click', handleCreateStore)
   })
 
+  function handleStoreClick(store: StoresResponse) {
+    navigate(`/dashboard/store/${store.id}`)
+  }
+
   return (
     <div class="flex justify-center flex-col">
       <h1 class="text-lg text-center">
@@ -80,7 +84,10 @@ export function Welcome() {
       <div class="flex flex-col">
         <For each={stores().items}>
           {(store) => (
-            <div class="store__item flex items-center p-2 space-x-4">
+            <div
+              onClick={() => handleStoreClick(store)}
+              class="store__item flex items-center p-2 space-x-4"
+            >
               <div class="flex-shrink-0">
                 <Image.Root class="image">
                   <Image.Img

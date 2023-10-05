@@ -6,7 +6,7 @@ import './create-product.css'
 
 import { useNavigate } from '@solidjs/router'
 
-export function CreateProductPage() {
+export function CreateProduct() {
   const { mainButton, backButton } = useSDK()
   const [productName, setProductName] = createSignal('')
   const [productDescription, setProductDescription] = createSignal('')
@@ -17,7 +17,7 @@ export function CreateProductPage() {
   function goToNext() {
     mainButton().disable()
 
-    navigate('/dashboard/products-list')
+    navigate(`/dashboard/store/${123}/products`)
   }
 
   function onBack() {
