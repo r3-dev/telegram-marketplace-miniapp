@@ -1,5 +1,3 @@
-import { createSignal } from 'solid-js'
-
 import './App.css'
 
 import { Navigate, Route, Router, Routes } from '@solidjs/router'
@@ -14,8 +12,6 @@ import { Welcome } from './components/welcome/welcome'
 import { PocketbaseProvider } from './contexts/pocketbase'
 
 function App() {
-  const [count, setCount] = createSignal(0)
-
   return (
     <Router>
       <Routes>
