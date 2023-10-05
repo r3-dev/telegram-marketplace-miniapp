@@ -13,18 +13,18 @@ import { PocketbaseProvider } from './contexts/pocketbase'
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/dashboard">
-          <SDKProvider
-            initOptions={{
-              timeout: 3000,
-              cssVars: true,
-              debug: true
-            }}
-          >
-            <DisplayGate>
-              <PocketbaseProvider>
+    <SDKProvider
+      initOptions={{
+        timeout: 3000,
+        cssVars: true,
+        debug: true
+      }}
+    >
+      <DisplayGate>
+        <PocketbaseProvider>
+          <Router>
+            <Routes>
+              <Route path="/dashboard">
                 <Route
                   path="/"
                   component={Welcome}
@@ -49,12 +49,12 @@ function App() {
                   path="*"
                   element={<Navigate href="/" />}
                 />
-              </PocketbaseProvider>
-            </DisplayGate>
-          </SDKProvider>
-        </Route>
-      </Routes>
-    </Router>
+              </Route>
+            </Routes>
+          </Router>
+        </PocketbaseProvider>
+      </DisplayGate>
+    </SDKProvider>
   )
 }
 
