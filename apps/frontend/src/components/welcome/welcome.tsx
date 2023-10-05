@@ -1,13 +1,6 @@
 import { Image } from '@kobalte/core'
 import { useSDK } from '@tma.js/sdk-solid'
-import {
-  createEffect,
-  createSignal,
-  For,
-  onCleanup,
-  onMount,
-  Show
-} from 'solid-js'
+import { createEffect, createSignal, For, Show } from 'solid-js'
 
 import '../../styles/image.css'
 import './welcome.css'
@@ -25,16 +18,10 @@ const storesDefaultValue = {
 export function Welcome() {
   const [stores, setStores] =
     createSignal<ListResult<StoresResponse>>(storesDefaultValue)
+
   const sdk = useSDK()
   const navigate = useNavigate()
-
   const pb = usePocketBase()
-
-  function handleCreateStore() {
-    sdk.mainButton().disable()
-
-    navigate('/dashboard/store/create')
-  }
 
   createEffect(async () => {
     const user = sdk.initData()?.user
@@ -48,20 +35,6 @@ export function Welcome() {
       })
 
     setStores(storesResponse)
-  })
-
-  onMount(() => {
-    sdk.mainButton().on('click', handleCreateStore)
-    sdk.mainButton().setText('Создать магазин')
-
-    if (!sdk.mainButton().isVisible) sdk.mainButton().show()
-    if (sdk.backButton().isVisible) sdk.backButton().hide()
-
-    if (!sdk.mainButton().isEnabled) sdk.mainButton().enable()
-  })
-
-  onCleanup(() => {
-    sdk.mainButton().off('click', handleCreateStore)
   })
 
   function handleStoreClick(store: StoresResponse) {
@@ -86,7 +59,7 @@ export function Welcome() {
           {(store) => (
             <div
               onClick={() => handleStoreClick(store)}
-              class="store__item flex items-center p-2 space-x-4"
+              class="store__item flex items-center p-2 space-x-4cursor-pointer"
             >
               <div class="flex-shrink-0">
                 <Image.Root class="image">
