@@ -1,5 +1,5 @@
 import { Image, TextField } from '@kobalte/core'
-import { useNavigate, useParams, useRouteData } from '@solidjs/router'
+import { useNavigate } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
@@ -36,7 +36,7 @@ export function CreateStorePage() {
         description: storeDescription()
       }
 
-      const response = await pb
+      await pb
         .collection(Collections.Stores)
         .create<StoresResponse>(data)
         .catch((err) => {
