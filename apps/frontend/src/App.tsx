@@ -11,6 +11,32 @@ import { DisplayGate } from './components/twa-display-gate'
 import { Welcome } from './components/welcome/welcome'
 import { PocketbaseProvider } from './contexts/pocketbase'
 
+/* SITE MAP
+  /market
+    /
+    /:storeId
+    /:productId
+    /order
+      /:orderId
+    /cart
+  /dashboard
+    /
+    /store
+      /
+      /create
+      /:storeId
+        /
+        /products
+        /settings
+    /orders
+
+      /
+      /:orderId
+    /product
+      /create
+      /:productId
+*/
+
 function App() {
   return (
     <SDKProvider
