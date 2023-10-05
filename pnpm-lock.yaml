@@ -64,15 +64,39 @@ importers:
 
   apps/frontend:
     dependencies:
+      '@kobalte/core':
+        specifier: ^0.11.0
+        version: 0.11.0(solid-js@1.7.12)
+      '@solid-devtools/overlay':
+        specifier: ^0.27.7
+        version: 0.27.7(solid-js@1.7.12)
+      '@solidjs/router':
+        specifier: ^0.8.3
+        version: 0.8.3(solid-js@1.7.12)
+      '@tma.js/sdk':
+        specifier: ^0.11.5
+        version: 0.11.5
+      '@tma.js/sdk-solid':
+        specifier: ^0.1.5
+        version: 0.1.5(solid-js@1.7.12)
       install:
         specifier: ^0.13.0
         version: 0.13.0
+      lottie-web:
+        specifier: ^5.12.2
+        version: 5.12.2
       pnpm:
         specifier: ^8.8.0
         version: 8.8.0
+      pocketbase:
+        specifier: ^0.18.0
+        version: 0.18.0
       solid-js:
         specifier: ^1.7.8
         version: 1.7.12
+      tailwindcss:
+        specifier: ^3.0.24
+        version: 3.3.3
     devDependencies:
       typescript:
         specifier: ^5.0.2

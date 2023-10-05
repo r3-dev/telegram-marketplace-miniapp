@@ -9,9 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kobalte/core": "^0.11.0",
+    "@solid-devtools/overlay": "^0.27.7",
+    "@solidjs/router": "^0.8.3",
+    "@tma.js/sdk": "^0.11.5",
+    "@tma.js/sdk-solid": "^0.1.5",
     "install": "^0.13.0",
+    "lottie-web": "^5.12.2",
     "pnpm": "^8.8.0",
-    "solid-js": "^1.7.8"
+    "pocketbase": "^0.18.0",
+    "solid-js": "^1.7.8",
+    "tailwindcss": "^3.0.24"
   },
   "devDependencies": {
     "typescript": "^5.0.2",
