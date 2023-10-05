@@ -59,8 +59,8 @@ export type ProductsRecord = {
 }
 
 export type StoresRecord = {
+	avatar?: string
 	description?: string
-	field?: string
 	name: string
 	products?: RecordIdString[]
 	user?: RecordIdString
