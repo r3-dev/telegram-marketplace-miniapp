@@ -1,0 +1,21 @@
+.image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  overflow: hidden;
+  user-select: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 100%;
+  background-color: var(--tg-theme-secondary-bg-color);
+}
+
+.store__item {
+  border-radius: 4px;
+}
+
+.store__item:hover {
+  cursor: pointer;
+  background-color: var(--tg-theme-secondary-bg-color);
+}
