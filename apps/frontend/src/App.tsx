@@ -1,30 +1,17 @@
-import { attachDevtoolsOverlay } from '@solid-devtools/overlay'
+import './App.css'
+
 import { Navigate, Route, Router, Routes } from '@solidjs/router'
 import { SDKProvider } from '@tma.js/sdk-solid'
 
-import { PocketbaseProvider } from '../../contexts/pocketbase'
-import { DisplayGate } from '../twa-display-gate'
-import { CreateProductPage } from './create-product/create-product'
-import { CreateStorePage } from './create-store/create-store'
-import { DashboardPage } from './index'
-import { ProductsListPage } from './products-list/products-list'
-import { StoreActions } from './store-actions/store-actions'
-import { Welcome } from './welcome/welcome'
+import { CreateProductPage } from './components/create-product/create-product'
+import { CreateStorePage } from './components/create-store/create-store'
+import { ProductsListPage } from './components/products-list/products-list'
+import { SuccessMock } from './components/success/success'
+import { DisplayGate } from './components/twa-display-gate'
+import { Welcome } from './components/welcome/welcome'
+import { PocketbaseProvider } from './contexts/pocketbase'
 
-import '../../styles/global.css'
-
-import { Success, SuccessMock } from './success/success'
-
-if (import.meta.env.DEV) {
-  attachDevtoolsOverlay()
-
-  attachDevtoolsOverlay({
-    defaultOpen: false,
-    noPadding: true
-  })
-}
-
-export function DashboardRoot() {
+function App() {
   return (
     <SDKProvider
       initOptions={{
@@ -70,3 +57,5 @@ export function DashboardRoot() {
     </SDKProvider>
   )
 }
+
+export default App
