@@ -3,7 +3,7 @@ import { useSDK } from '@tma.js/sdk-solid'
 import { onCleanup, onMount } from 'solid-js'
 import type { Component } from 'solid-js'
 
-import { LottieAnimation } from '../../lottie-animation'
+import { LottieAnimation } from '../lottie-animation'
 
 interface SuccessProps {
   text: string

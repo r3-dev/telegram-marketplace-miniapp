@@ -9,9 +9,9 @@ import { CreateProductPage } from './components/create-product/create-product'
 import { CreateStorePage } from './components/create-store/create-store'
 import { ProductsListPage } from './components/products-list/products-list'
 import { SuccessMock } from './components/success/success'
+import { DisplayGate } from './components/twa-display-gate'
 import { Welcome } from './components/welcome/welcome'
 import { PocketbaseProvider } from './contexts/pocketbase'
-import { DisplayGate } from './twa-display-gate'
 
 function App() {
   const [count, setCount] = createSignal(0)
@@ -19,16 +19,16 @@ function App() {
   return (
     <Router>
       <Routes>
-        <SDKProvider
-          initOptions={{
-            timeout: 3000,
-            cssVars: true,
-            debug: true
-          }}
-        >
-          <DisplayGate>
-            <PocketbaseProvider>
-              <Route path="/dashboard">
+        <Route path="/dashboard">
+          <SDKProvider
+            initOptions={{
+              timeout: 3000,
+              cssVars: true,
+              debug: true
+            }}
+          >
+            <DisplayGate>
+              <PocketbaseProvider>
                 <Route
                   path="/"
                   component={Welcome}
@@ -53,10 +53,10 @@ function App() {
                   path="*"
                   element={<Navigate href="/" />}
                 />
-              </Route>
-            </PocketbaseProvider>
-          </DisplayGate>
-        </SDKProvider>
+              </PocketbaseProvider>
+            </DisplayGate>
+          </SDKProvider>
+        </Route>
       </Routes>
     </Router>
   )
