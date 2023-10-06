@@ -16,6 +16,7 @@
     "@tma.js/sdk-solid": "^0.1.5",
     "lottie-web": "^5.12.2",
     "pocketbase": "^0.18.0",
+    "solid-icons": "^1.0.12",
     "solid-js": "^1.7.8"
   },
   "devDependencies": {
