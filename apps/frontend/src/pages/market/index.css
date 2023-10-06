@@ -1,0 +1,11 @@
+.product{
+    max-width: min-content;
+}
+
+.observer{
+    width: 100%;
+    background: #ff000032;
+    height: 6rem;
+    position: absolute;
+    bottom: 0px;
+}

@@ -30,6 +30,10 @@
   color: var(--tg-theme-hint-color);
 }
 
+.text-field__input.padded_left{
+  padding-left: 2rem;
+}
+
 .text-field__description {
   color: var(--tg-theme-hint-color);
   font-size: 12px;
