@@ -9,6 +9,7 @@
     "ci": "pnpm install --frozen-lockfile",
     "ci:prod": "pnpm install --frozen-lockfile --prod",
     "dev": "pnpm --filter=./apps/* run dev",
+    "dev:fe": "cd ./apps/frontend && pnpm dev",
     "build": "pnpm --filter=./apps/* run build",
     "ngrok": "npx ngrok http 3000",
     "format": "prettier --write \"**/*.{js,ts,tsx,json}\"",
