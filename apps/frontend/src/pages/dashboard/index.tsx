@@ -2,7 +2,7 @@ import { useNavigate } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import { onCleanup, onMount } from 'solid-js'
 
-import { Welcome } from '../../components/welcome/welcome'
+import { Welcome } from '@/components/welcome/welcome'
 
 export function DashboardPage() {
   const sdk = useSDK()

@@ -2,8 +2,8 @@ import { useNavigate, useParams } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
-import { usePocketBase } from '../../../../contexts/pocketbase'
-import { Collections, StoresResponse } from '../../../../types/pb-types'
+import { usePocketBase } from '@/contexts/pocketbase'
+import { Collections, StoresResponse } from '@/types/pb-types'
 
 export function StoreIdPage() {
   const [store, setStore] = createSignal<StoresResponse>({} as StoresResponse)

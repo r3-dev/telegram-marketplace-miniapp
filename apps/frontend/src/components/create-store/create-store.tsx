@@ -3,16 +3,16 @@ import { useNavigate } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import { createEffect, createSignal, onCleanup, onMount } from 'solid-js'
 
-import { usePocketBase } from '../../contexts/pocketbase'
-import { Collections } from '../../types/pb-types'
+import { usePocketBase } from '@/contexts/pocketbase'
+import { Collections } from '@/types/pb-types'
 import type {
   StoresRecord,
   StoresResponse,
   UsersResponse
-} from '../../types/pb-types'
+} from '@/types/pb-types'
 
-import '../../styles/text-field.css'
-import '../../styles/image.css'
+import '@/styles/text-field.css'
+import '@/styles/image.css'
 import './create-store.css'
 
 export function CreateStore() {

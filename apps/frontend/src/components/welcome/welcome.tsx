@@ -2,14 +2,14 @@ import { Image } from '@kobalte/core'
 import { useSDK } from '@tma.js/sdk-solid'
 import { createEffect, createSignal, For, Show } from 'solid-js'
 
-import '../../styles/image.css'
+import '@/styles/image.css'
 import './welcome.css'
 
 import { useNavigate } from '@solidjs/router'
 import type { ListResult } from 'pocketbase'
 
-import { usePocketBase } from '../../contexts/pocketbase'
-import { Collections, StoresResponse } from '../../types/pb-types'
+import { usePocketBase } from '@/contexts/pocketbase'
+import { Collections, StoresResponse } from '@/types/pb-types'
 
 const storesDefaultValue = {
   items: [] as StoresResponse[]
