@@ -66,7 +66,7 @@ export function MarketPage() {
       </div>
 
       <div class="flex flex-wrap justify-center gap-3 mt-5 relative">
-        <For each={aggregatedProducts().items} fallback={<p>Loading...</p>}>{(product, i) => <div class="w-[9rem]">
+        <For each={aggregatedProducts().items} fallback={<p>Loading...</p>}>{(product) => <div class="w-[9rem]">
           <Image.Root class="image rounded">
             <Image.Img
               class="image__img"

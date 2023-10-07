@@ -1,4 +1,3 @@
-import { ProductsResponse } from "@/types/pb-types";
 import { ListResult } from "pocketbase";
 import { Accessor, Resource, createMemo } from "solid-js";
 
