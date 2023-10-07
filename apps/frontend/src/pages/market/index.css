@@ -3,9 +3,9 @@
 }
 
 .observer{
-    width: 100%;
-    background: #ff000032;
-    height: 6rem;
     position: absolute;
+    width: 100%;
+    height: 6rem;
+    pointer-events: none;
     bottom: 0px;
 }
