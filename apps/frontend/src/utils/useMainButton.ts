@@ -12,7 +12,6 @@ export function useMainButton(handler: (mb: MainButton) => void) {
 
     onMount(() => {
         mb.on('click', clickHandler);
-        mb.setText('Добавить в корзину')
         if (!mb.isVisible) mb.show()
         if (!mb.isEnabled) mb.enable()
 
