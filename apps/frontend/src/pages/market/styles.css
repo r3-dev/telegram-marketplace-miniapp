@@ -2,6 +2,19 @@
         background-color: var(--tg-theme-secondary-bg-color);
 }
 
+.image {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    overflow: hidden;
+    user-select: none;
+    width: 64px;
+    height: 64px;
+    border-radius: 1rem;
+    background-color: var(--tg-theme-secondary-bg-color);
+  }
+
 .observer{
     position: absolute;
     width: 100%;

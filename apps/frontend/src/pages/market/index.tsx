@@ -36,7 +36,6 @@ export function MarketPage() {
 
   const debounced = useDebounce(onSearch, 300)
 
-
   onMount(() => {
     if (!observer) return
     intersectionObserver = new IntersectionObserver(function (entries) {
@@ -75,7 +74,7 @@ export function MarketPage() {
         <For each={aggregatedProducts().items} fallback={<p>Loading...</p>}>
           {(product) =>
             <div class="product w-[9rem] cursor-pointer p-4" onClick={() => handleProductClick(product)}>
-              <Image.Root class="image rounded">
+              <Image.Root class="image">
                 <Image.Img
                   class="image__img"
                   src={pb.files.getUrl(product, product.images[0], { 'thumb': '0x128', })} />
