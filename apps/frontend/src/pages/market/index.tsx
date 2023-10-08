@@ -8,6 +8,7 @@ import { useDebounce } from "@/utils/useDebounce";
 import "@/styles/text-field.css"
 import "@/styles/image.css"
 import './styles.css'
+import { useNavigate } from "@solidjs/router";
 
 export function MarketPage() {
 
@@ -26,6 +27,7 @@ export function MarketPage() {
   const [page, setPage] = createSignal(1)
   const [products] = createResource(() => ({ name: fetchName(), page: page() }), fetchMarket)
   const aggregatedProducts = createAggListResult(products)
+  const navigate = useNavigate()
 
   const onSearch = (e: string) => {
     setPage(1)
@@ -56,6 +58,10 @@ export function MarketPage() {
     debounced(e)
   }
 
+  function handleProductClick(product: ProductsResponse) {
+    navigate(`/market/product/${product.id}`)
+  }
+
   return (
     <>
       <div class="flex justify-center items-center relative">
@@ -65,19 +71,21 @@ export function MarketPage() {
         </TextField.Root>
       </div>
 
-      <div class="flex flex-wrap justify-center gap-3 mt-5 relative">
-        <For each={aggregatedProducts().items} fallback={<p>Loading...</p>}>{(product) => <div class="w-[9rem]">
-          <Image.Root class="image rounded">
-            <Image.Img
-              class="image__img"
-              src={pb.files.getUrl(product, product.images[0], { 'thumb': '0x128', })} />
-            <Image.Fallback class="image__fallback">
-              {product.name.charAt(0).toUpperCase()}
-            </Image.Fallback>
-          </Image.Root>
-          <div>${product.price}</div>
-          <div>{product.name}</div>
-        </div>}
+      <div class="flex flex-wrap justify-center mt-5 relative">
+        <For each={aggregatedProducts().items} fallback={<p>Loading...</p>}>
+          {(product) =>
+            <div class="product w-[9rem] cursor-pointer p-4" onClick={() => handleProductClick(product)}>
+              <Image.Root class="image rounded">
+                <Image.Img
+                  class="image__img"
+                  src={pb.files.getUrl(product, product.images[0], { 'thumb': '0x128', })} />
+                <Image.Fallback class="image__fallback">
+                  {product.name.charAt(0).toUpperCase()}
+                </Image.Fallback>
+              </Image.Root>
+              <div>${product.price}</div>
+              <div>{product.name}</div>
+            </div>}
         </For>
         <div ref={observer} class="observer"></div>
       </div>
