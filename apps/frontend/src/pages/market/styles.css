@@ -1,5 +1,5 @@
-.product{
-    max-width: min-content;
+.product:hover{
+        background-color: var(--tg-theme-secondary-bg-color);
 }
 
 .observer{

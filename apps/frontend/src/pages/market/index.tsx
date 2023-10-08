@@ -7,7 +7,7 @@ import { createAggListResult } from "@/utils/createAggListResult";
 import { useDebounce } from "@/utils/useDebounce";
 import "@/styles/text-field.css"
 import "@/styles/image.css"
-import './index.css'
+import './styles.css'
 
 export function MarketPage() {
 
