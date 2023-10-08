@@ -59,7 +59,7 @@ export function Welcome() {
           {(store) => (
             <div
               onClick={() => handleStoreClick(store)}
-              class="store__item flex items-center p-2 space-x-4cursor-pointer"
+              class="store__item flex items-center p-2 space-x-4 cursor-pointer"
             >
               <div class="flex-shrink-0">
                 <Image.Root class="image">
