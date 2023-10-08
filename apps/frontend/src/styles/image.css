@@ -20,7 +20,3 @@
   fill: currentColor;
   color: var(--tg-theme-hint-color);
 }
-
-.image.rounded{
-  border-radius: 14px;
-}
