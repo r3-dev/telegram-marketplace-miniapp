@@ -19,8 +19,8 @@ import { MarketPage } from './pages/market'
 import { MarketCartPage } from './pages/market/cart'
 import { MarketOrdersPage } from './pages/market/order'
 import { MarketOrderIdPage } from './pages/market/order/order-id'
-import { MarketProductIdPage } from './pages/market/product-id'
-import { MarketStoreIdPage } from './pages/market/store-id'
+import { MarketProductIdPage } from './pages/market/product/product-id'
+import { MarketStoreIdPage } from './pages/market/store/store-id'
 
 /* SITE MAP
   /market
@@ -67,11 +67,11 @@ function App() {
                   component={MarketPage}
                 />
                 <Route
-                  path="/:storeId"
+                  path="/store/:storeId"
                   component={MarketStoreIdPage}
                 />
                 <Route
-                  path="/:productId"
+                  path="/product/:productId"
                   component={MarketProductIdPage}
                 />
                 <Route path="/order">
