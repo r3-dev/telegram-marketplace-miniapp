@@ -3,8 +3,7 @@ import { Collections, OrderItemsRecord, OrdersRecord, OrdersResponse, ProductsRe
 import { useBackButton } from "@/utils/useBackButton"
 import { useMainButton } from "@/utils/useMainButton"
 import { useNavigate, useParams } from "@solidjs/router"
-import { MainButton } from "@tma.js/sdk"
-import { Show, Suspense, createEffect, createResource, lazy } from "solid-js"
+import { Show, createEffect, createResource } from "solid-js"
 import { Image } from "@kobalte/core"
 import { attachDevtoolsOverlay } from "@solid-devtools/overlay"
 import "@/styles/image.css"
@@ -16,16 +15,26 @@ export function MarketProductIdPage() {
   const navigate = useNavigate()
   const params = useParams()
   const pb = usePocketBase()
+  const mb = useMainButton()
   useBackButton(() => navigate(-1))
 
-  function fetcher(productId: string) {
+  function fetcherProduct(productId: string) {
     return pb.collection(Collections.Products)
       .getOne<ProductsRecord>(productId)
   }
 
-  const [product] = createResource(params.productId, fetcher)
+  function fetcherOrder(productId: string) {
+    return pb.collection(Collections.OrderItems)
+      .getFirstListItem<OrderItemsRecord>(`product.id = "${productId}"`)
+  }
 
-  async function addToCart(mb: MainButton) {
+  const [product] = createResource(params.productId, fetcherProduct)
+  const [order] = createResource(params.productId, fetcherOrder)
+
+  const ADD_TO_CART = () => `Добавить в корзину $${product()?.price}`
+  const GO_TO_CART = "✅ В корзину"
+
+  async function addToCart() {
     mb.showProgress().disable()
     const userId = (pb.authStore.model as UsersResponse).id
 
@@ -64,7 +73,8 @@ export function MarketProductIdPage() {
           throw err
         })
 
-      mb.setText("✅ В корзину").on('click', () => {
+      mb.off('click', addToCart)
+      mb.setText(GO_TO_CART).on('click', () => {
         navigate('/market/cart')
       })
     } catch (error) {
@@ -74,10 +84,18 @@ export function MarketProductIdPage() {
     }
   }
 
-  const mb = useMainButton(addToCart)
+  function goToCart() {
+    navigate('/market/cart')
+  }
 
   createEffect(() => {
-    mb.setText(`Добавить в корзину $${product()?.price}`)
+    mb.off('click', goToCart)
+    mb.off('click', addToCart)
+    if (order.state != 'ready') {
+      mb.setText(ADD_TO_CART()).on('click', addToCart)
+    } else {
+      mb.setText(GO_TO_CART).on('click', goToCart)
+    }
   })
 
   return (
