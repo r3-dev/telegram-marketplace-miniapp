@@ -2,16 +2,16 @@ import { MainButton } from "@tma.js/sdk";
 import { useSDK } from "@tma.js/sdk-solid";
 import { onCleanup, onMount } from "solid-js";
 
-export function useMainButton(handler: (mb: MainButton) => void) {
+export function useMainButton(handler?: (mb: MainButton) => void) {
     const { mainButton } = useSDK();
     const mb = mainButton();
 
     const clickHandler = () => {
-        handler(mb);
+        if (handler) handler(mb);
     }
 
     onMount(() => {
-        mb.on('click', clickHandler);
+        if (handler) mb.on('click', clickHandler);
         if (!mb.isVisible) mb.show()
         if (!mb.isEnabled) mb.enable()
 
