@@ -18,12 +18,12 @@ export function MarketProductIdPage() {
   const mb = useMainButton()
   useBackButton(() => navigate(-1))
 
-  function fetcherProduct(productId: string) {
+  async function fetcherProduct(productId: string) {
     return pb.collection(Collections.Products)
       .getOne<ProductsRecord>(productId)
   }
 
-  function fetcherOrder(productId: string) {
+  async function fetcherOrder(productId: string) {
     return pb.collection(Collections.OrderItems)
       .getFirstListItem<OrderItemsRecord>(`product.id = "${productId}"`)
   }
