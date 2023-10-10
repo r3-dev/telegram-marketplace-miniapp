@@ -56,6 +56,7 @@ export type ProductsRecord = {
 	images?: string[]
 	name: string
 	price?: number
+	store?: RecordIdString
 }
 
 export type StoresRecord = {
