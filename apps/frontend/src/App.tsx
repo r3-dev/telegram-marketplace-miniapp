@@ -8,11 +8,11 @@ import { PocketbaseProvider } from './contexts/pocketbase'
 import { DashboardPage } from './pages/dashboard'
 import { OrdersPage } from './pages/dashboard/order'
 import { OrderIdPage } from './pages/dashboard/order/order-id'
-import { CreateProductPage } from './pages/dashboard/product/create'
 import { ProductIdPage } from './pages/dashboard/product/product-id'
 import { StoresPage } from './pages/dashboard/store'
 import { CreateStorePage } from './pages/dashboard/store/create'
 import { StoreIdPage } from './pages/dashboard/store/store-id'
+import { CreateProductPage } from './pages/dashboard/store/store-id/create-product'
 import { StoreProductsPage } from './pages/dashboard/store/store-id/products'
 import { StoreSettingsPage } from './pages/dashboard/store/store-id/settings'
 import { MarketPage } from './pages/market'
@@ -100,10 +100,6 @@ function App() {
                 />
                 <Route path="/product">
                   <Route
-                    path="/create"
-                    component={CreateProductPage}
-                  />
-                  <Route
                     path="/:productId"
                     component={ProductIdPage}
                   />
@@ -140,6 +136,10 @@ function App() {
                       path="/products"
                       component={StoreProductsPage}
                     />
+                    <Route
+                      path="/create-product"
+                      component={CreateProductPage}
+                    />
                   </Route>
                 </Route>
                 <Route
@@ -147,10 +147,6 @@ function App() {
                   element={<Navigate href="/" />}
                 />
               </Route>
-              <Route
-                path="*"
-                element={<Navigate href="/market" />}
-              />
             </Routes>
           </Router>
         </PocketbaseProvider>
