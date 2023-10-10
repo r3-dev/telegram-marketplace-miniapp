@@ -14,3 +14,8 @@
   line-height: 0;
   transition: 250ms background-color;
 }
+
+.button.button__status-bar{
+  height: 2rem;
+  padding: 0 10px;
+}
