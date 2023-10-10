@@ -9,6 +9,7 @@ import "@/styles/text-field.css"
 import "@/styles/image.css"
 import indexStyles from './index.module.css'
 import { useNavigate } from "@solidjs/router";
+import { useMainButton } from "@/utils/useMainButton";
 
 export function MarketPage() {
 
@@ -28,6 +29,8 @@ export function MarketPage() {
   const [products] = createResource(() => ({ name: fetchName(), page: page() }), fetchMarket)
   const aggregatedProducts = createAggListResult(products)
   const navigate = useNavigate()
+  const mb = useMainButton(() => navigate('/market/cart'))
+  mb.setText('В корзину')
 
   const onSearch = (e: string) => {
     setPage(1)
