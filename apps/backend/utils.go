@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	initdata "github.com/Telegram-Web-Apps/init-data-golang"
@@ -19,7 +20,13 @@ func getUsername(username string, id int64) string {
 }
 
 func initDataCheck(c echo.Context, identity string, password string) (*initdata.User, error) {
-	token := os.Getenv("TELEGRAM_BOT_TOKEN")
+	var token string
+	referer := c.Request().Header.Get("Referer")
+	if strings.Contains(referer, "market") {
+		token = os.Getenv("TELEGRAM_MARKET_BOT_TOKEN")
+	} else {
+		token = os.Getenv("TELEGRAM_STORE_BOT_TOKEN")
+	}
 
 	expIn := 24 * time.Hour
 
