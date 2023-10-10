@@ -1,4 +1,3 @@
-import { Separator } from '@kobalte/core'
 import { useNavigate, useParams } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import { createSignal, For, onCleanup, onMount } from 'solid-js'
