@@ -3,7 +3,7 @@ import { Collections, OrderItemsRecord, OrdersRecord, OrdersResponse, OrdersStat
 import { useBackButton } from "@/utils/useBackButton"
 import { useMainButton } from "@/utils/useMainButton"
 import { useNavigate, useParams } from "@solidjs/router"
-import { Show, createEffect, createResource } from "solid-js"
+import { Show, createEffect, createResource, onCleanup } from "solid-js"
 import { Image } from "@kobalte/core"
 import { attachDevtoolsOverlay } from "@solid-devtools/overlay"
 import "@/styles/image.css"
@@ -75,9 +75,7 @@ export function MarketProductIdPage() {
         })
 
       mb.off('click', addToCart)
-      mb.setText(GO_TO_CART).on('click', () => {
-        navigate('/market/cart')
-      })
+      mb.setText(GO_TO_CART).on('click', goToCart)
     } catch (error) {
       console.error(error)
     } finally {
@@ -86,6 +84,7 @@ export function MarketProductIdPage() {
   }
 
   function goToCart() {
+    mb.off('click', goToCart)
     navigate('/market/cart')
   }
 
@@ -97,6 +96,11 @@ export function MarketProductIdPage() {
     } else {
       mb.setText(GO_TO_CART).on('click', goToCart)
     }
+  })
+
+  onCleanup(() => {
+    mb.off('click', goToCart)
+    mb.off('click', addToCart)
   })
 
   return (
