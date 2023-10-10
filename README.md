@@ -1,10 +1,6 @@
-# R3 MVP stack
-
-This is a fullstack template for blazingly fast MVP development. It is focused on Developer and DevOps experience.
-
 ## Tech Stack
 
-**Client:** Astro, Typescript, TailwindCSS
+**Client:** Vite, SolidJS, Typescript, TailwindCSS
 
 **Server:** Golang, Pocketbase
 
