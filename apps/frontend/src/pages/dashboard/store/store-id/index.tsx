@@ -1,14 +1,12 @@
 import { useNavigate, useParams } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
-import { createEffect, createSignal, onCleanup, onMount } from 'solid-js'
+import { onCleanup, onMount } from 'solid-js'
 
 import { DashboardStoreLayout } from '@/components/dashboard-store-layout'
 import { usePocketBase } from '@/contexts/pocketbase'
-import { Collections, StoresResponse } from '@/types/pb-types'
+import { Collections } from '@/types/pb-types'
 
 export function StoreIdPage() {
-  const [store, setStore] = createSignal<StoresResponse>({} as StoresResponse)
-
   const sdk = useSDK()
   const navigate = useNavigate()
   const params = useParams()
@@ -22,14 +20,6 @@ export function StoreIdPage() {
     sdk.backButton().on('click', handleGoBack)
   })
 
-  createEffect(() => {
-    pb.collection(Collections.Stores)
-      .getOne<StoresResponse>(params.storeId)
-      .then((store) => {
-        setStore(store)
-      })
-  })
-
   onCleanup(() => {
     sdk.backButton().off('click', handleGoBack)
   })
@@ -39,8 +29,9 @@ export function StoreIdPage() {
   }
 
   function handleCatalogClick() {
-    navigate(`/dashboard/store/${store()}/products`)
+    navigate(`/dashboard/store/${params.storeId}/products`)
   }
+
   async function handleDeleteStoreClick() {
     const deleteConfirm = await sdk.popup().open({
       message: 'Are you sure you want to delete this store?',
