@@ -1,20 +1,24 @@
 import { Button, Image } from "@kobalte/core"
 import { usePocketBase } from "@/contexts/pocketbase"
-import { Collections, OrderItemsResponse, OrdersRecord, OrdersStatusOptions, ProductsResponse, UsersResponse } from "@/types/pb-types"
+import { Collections, OrderItemsResponse, OrdersStatusOptions, ProductsResponse, UsersResponse } from "@/types/pb-types"
 import { useBackButton } from "@/utils/useBackButton"
 import { useNavigate } from "@solidjs/router"
-import { For, Suspense, createEffect, createResource } from "solid-js"
+import { For, Show, Suspense, createEffect, createResource, createSignal } from "solid-js"
 import { BsBoxSeamFill, BsTrashFill } from "solid-icons/bs"
 import "@/styles/button.css"
 import cartStyles from "./cart.module.css"
 import { useMainButton } from "@/utils/useMainButton"
+import { Success } from "@/components/success/success"
+import { attachDevtoolsOverlay } from "@solid-devtools/overlay"
 
 type Texpand = {
   product: ProductsResponse
 }
 
 export function MarketCartPage() {
+
   const pb = usePocketBase()
+  const [isBuyed, setIsBuyed] = createSignal(false)
 
   const fetchOrdersItems = async () => {
     return pb.collection(Collections.OrderItems)
@@ -34,6 +38,7 @@ export function MarketCartPage() {
       mb.hide().disable()
       return
     }
+    mb.show().enable()
     mb.setText(`Купить $${price}`)
   })
 
@@ -54,6 +59,7 @@ export function MarketCartPage() {
         status: OrdersStatusOptions.WaitForVendor
       })
       mb.off('click', buy)
+      setIsBuyed(true)
     } catch (e) {
       console.error(e)
     }
@@ -68,7 +74,9 @@ export function MarketCartPage() {
     }
   }
 
-  return (
+  return <Show when={!isBuyed()} fallback={<Success nextButtonLink="/market"
+    nextButtonText="В магазин"
+    text="Спасибо за покупку!" />}>
     <div>
       <header class="text-left">
         Корзина{quantity()
@@ -94,5 +102,5 @@ export function MarketCartPage() {
       <footer>
         {quantity() && <><BsBoxSeamFill />Количество: {quantity()}</>}</footer>
     </div>
-  )
+  </Show>
 }
