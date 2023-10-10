@@ -1,8 +1,8 @@
 import { Image } from '@kobalte/core'
-import { useParams } from '@solidjs/router'
+import { useNavigate, useParams } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import PocketBase from 'pocketbase'
-import { createResource, For, Show } from 'solid-js'
+import { createResource, For, onCleanup, onMount, Show } from 'solid-js'
 
 import { DashboardStoreLayout } from '@/components/dashboard-store-layout'
 import { usePocketBase } from '@/contexts/pocketbase'
@@ -11,6 +11,7 @@ import { Collections, ProductsResponse } from '@/types/pb-types'
 export function StoreProductsPage() {
   const params = useParams()
   const pb = usePocketBase()
+  const navigate = useNavigate()
 
   const [products, { refetch: refetchProducts }] = createResource(
     { storeId: params.storeId, _pb: pb },
@@ -18,6 +19,32 @@ export function StoreProductsPage() {
   )
 
   const sdk = useSDK()
+
+  onMount(() => {
+    sdk.mainButton().on('click', handleAddProduct)
+    sdk.backButton().on('click', handleBackClick)
+    sdk.mainButton().setText('Add product')
+
+    if (!sdk.mainButton().isVisible) sdk.mainButton().show()
+    if (!sdk.backButton().isVisible) sdk.backButton().show()
+
+    if (!sdk.mainButton().isEnabled) sdk.mainButton().enable()
+  })
+
+  onCleanup(() => {
+    sdk.mainButton().off('click', handleAddProduct)
+    sdk.backButton().off('click', handleBackClick)
+  })
+
+  function handleAddProduct() {
+    sdk.mainButton().disable()
+
+    navigate(`/dashboard/store/${params.storeId}/create-product`)
+  }
+
+  function handleBackClick() {
+    navigate(`/dashboard/store/${params.storeId}`)
+  }
 
   function fetchProducts({
     storeId,
@@ -78,7 +105,7 @@ export function StoreProductsPage() {
         <div class="flex flex-col">
           <Show
             when={products() !== undefined && products()!.length > 0}
-            fallback={<div>Empty. Add one</div>}
+            fallback={<div class="text-tg-hint">There are no products yet</div>}
           >
             <For each={products()}>
               {(_product) => (
@@ -103,6 +130,9 @@ export function StoreProductsPage() {
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="font-medium truncate">{_product.name}</p>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium truncate">{_product.price}$</p>
                   </div>
                 </div>
               )}
