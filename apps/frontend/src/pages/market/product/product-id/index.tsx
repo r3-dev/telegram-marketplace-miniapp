@@ -23,7 +23,7 @@ export function MarketProductIdPage() {
 
   async function fetcherOrder(productId: string) {
     return pb.collection(Collections.OrderItems)
-      .getFirstListItem<OrderItemsRecord>(`product.id = "${productId}"`)
+      .getFirstListItem<OrderItemsRecord>(`product.id = "${productId}" && order.status = "BuyerInProcess"`)
   }
 
   const [product] = createResource(params.productId, fetcherProduct)
