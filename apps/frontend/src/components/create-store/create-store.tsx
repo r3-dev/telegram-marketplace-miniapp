@@ -1,21 +1,21 @@
 import { Image, TextField } from '@kobalte/core'
 import { useNavigate } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
-import { createSignal, onCleanup, onMount } from 'solid-js'
-
-import { usePocketBase } from '../../contexts/pocketbase'
-import { Collections } from '../../types/pb-types'
+import { createEffect, createSignal, onCleanup, onMount } from 'solid-js'
 import type {
   StoresRecord,
   StoresResponse,
   UsersResponse
-} from '../../types/pb-types'
+} from '@/types/pb-types'
 
-import '../../styles/text-field.css'
-import '../../styles/image.css'
+import { usePocketBase } from '@/contexts/pocketbase'
+import { Collections } from '@/types/pb-types'
+
+import '@/styles/text-field.css'
+import '@/styles/image.css'
 import './create-store.css'
 
-export function CreateStorePage() {
+export function CreateStore() {
   const [storeName, setStoreName] = createSignal('')
   const [storeDescription, setStoreDescription] = createSignal('')
   const [storeAvatar, setStoreAvatar] = createSignal('')
@@ -36,14 +36,14 @@ export function CreateStorePage() {
         description: storeDescription()
       }
 
-      await pb
+      const response = await pb
         .collection(Collections.Stores)
         .create<StoresResponse>(data)
         .catch((err) => {
           throw err
         })
 
-      navigate(`/dashboard`)
+      navigate(`/dashboard/store/${response.id}/create-product`)
     } catch (error) {
       console.error(error)
     } finally {
@@ -61,11 +61,18 @@ export function CreateStorePage() {
     mainButton().on('click', goToNext)
     backButton().on('click', onBack)
 
-    if (!mainButton().isVisible) mainButton().show()
     if (!backButton().isVisible) backButton().show()
 
     if (!mainButton().isEnabled) mainButton().enable()
     if (!mainButton().isProgressVisible) mainButton().hideProgress()
+  })
+
+  createEffect(() => {
+    if (storeName().length === 0) {
+      mainButton().hide().disable()
+    } else {
+      mainButton().show().enable()
+    }
   })
 
   onCleanup(() => {
@@ -125,19 +132,21 @@ export function CreateStorePage() {
         <TextField.Root
           required
           class="text-field"
+          value={storeName()}
+          onChange={setStoreName}
         >
           <TextField.Label class="text-field__label">Name</TextField.Label>
           <TextField.Input
             class="text-field__input"
             autocomplete="off"
-            value={storeName()}
-            onChange={(e) => setStoreName(e.currentTarget.value)}
           />
         </TextField.Root>
 
         <TextField.Root
           required
           class="text-field"
+          value={storeDescription()}
+          onChange={setStoreDescription}
         >
           <TextField.Label class="text-field__label">
             Description
@@ -145,8 +154,6 @@ export function CreateStorePage() {
           <TextField.TextArea
             autoResize
             class="text-field__input"
-            value={storeDescription()}
-            onChange={(e) => setStoreDescription(e.currentTarget.value)}
           />
         </TextField.Root>
       </div>

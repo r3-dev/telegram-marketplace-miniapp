@@ -45,7 +45,14 @@ export type OrderItemsRecord = {
 	quantity: number
 }
 
+export enum OrdersStatusOptions {
+	"BuyerInProcess" = "BuyerInProcess",
+	"WaitForVendor" = "WaitForVendor",
+	"VendorInProcess" = "VendorInProcess",
+	"Done" = "Done",
+}
 export type OrdersRecord = {
+	status: OrdersStatusOptions
 	store?: RecordIdString
 	user?: RecordIdString
 }
@@ -56,6 +63,7 @@ export type ProductsRecord = {
 	images?: string[]
 	name: string
 	price?: number
+	store?: RecordIdString
 }
 
 export type StoresRecord = {

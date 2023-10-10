@@ -1,6 +1,6 @@
 import { Button } from '@kobalte/core'
 
-import '../../../styles/button.css'
+import '@/styles/button.css'
 
 export function StoreActions() {
   return (

@@ -3,13 +3,50 @@ import './App.css'
 import { Navigate, Route, Router, Routes } from '@solidjs/router'
 import { SDKProvider } from '@tma.js/sdk-solid'
 
-import { CreateProductPage } from './components/create-product/create-product'
-import { CreateStorePage } from './components/create-store/create-store'
-import { ProductsListPage } from './components/products-list/products-list'
-import { SuccessMock } from './components/success/success'
 import { DisplayGate } from './components/twa-display-gate'
-import { Welcome } from './components/welcome/welcome'
 import { PocketbaseProvider } from './contexts/pocketbase'
+import { DashboardPage } from './pages/dashboard'
+import { OrdersPage } from './pages/dashboard/order'
+import { OrderIdPage } from './pages/dashboard/order/order-id'
+import { ProductIdPage } from './pages/dashboard/product/product-id'
+import { StoresPage } from './pages/dashboard/store'
+import { CreateStorePage } from './pages/dashboard/store/create'
+import { StoreIdPage } from './pages/dashboard/store/store-id'
+import { CreateProductPage } from './pages/dashboard/store/store-id/create-product'
+import { StoreProductsPage } from './pages/dashboard/store/store-id/products'
+import { StoreSettingsPage } from './pages/dashboard/store/store-id/settings'
+import { MarketPage } from './pages/market'
+import { MarketCartPage } from './pages/market/cart'
+import { MarketOrdersPage } from './pages/market/order'
+import { MarketOrderIdPage } from './pages/market/order/order-id'
+import { MarketProductIdPage } from './pages/market/product/product-id'
+import { MarketStoreIdPage } from './pages/market/store/store-id'
+
+/* SITE MAP
+  /market
+    /
+    /:storeId
+    /:productId
+    /order
+      /:orderId
+    /cart
+  /dashboard
+    /
+    /store
+      /
+      /create
+      /:storeId
+        /
+        /products
+        /settings
+    /orders
+
+      /
+      /:orderId
+    /product
+      /create
+      /:productId
+*/
 
 function App() {
   return (
@@ -24,27 +61,87 @@ function App() {
         <PocketbaseProvider>
           <Router>
             <Routes>
+              <Route path="/market">
+                <Route
+                  path="/"
+                  component={MarketPage}
+                />
+                <Route
+                  path="/store/:storeId"
+                  component={MarketStoreIdPage}
+                />
+                <Route
+                  path="/product/:productId"
+                  component={MarketProductIdPage}
+                />
+                <Route path="/order">
+                  <Route
+                    path="/"
+                    component={MarketOrdersPage}
+                  />
+                  <Route
+                    path="/:orderId"
+                    component={MarketOrderIdPage}
+                  />
+                </Route>
+                <Route
+                  path="/cart"
+                  component={MarketCartPage}
+                />
+                <Route
+                  path="*"
+                  element={<Navigate href="/" />}
+                />
+              </Route>
               <Route path="/dashboard">
                 <Route
                   path="/"
-                  component={Welcome}
+                  component={DashboardPage}
                 />
-                <Route
-                  path="/create-store"
-                  component={CreateStorePage}
-                />
-                <Route
-                  path="/create-product"
-                  component={CreateProductPage}
-                />
-                <Route
-                  path="/products-list"
-                  component={ProductsListPage}
-                />
-                <Route
-                  path="/success"
-                  component={SuccessMock}
-                />
+                <Route path="/product">
+                  <Route
+                    path="/:productId"
+                    component={ProductIdPage}
+                  />
+                </Route>
+                <Route path="/orders">
+                  <Route
+                    path="/"
+                    component={OrdersPage}
+                  />
+                  <Route
+                    path="/:orderId"
+                    component={OrderIdPage}
+                  />
+                </Route>
+                <Route path="/store">
+                  <Route
+                    path="/"
+                    component={StoresPage}
+                  />
+                  <Route
+                    path="/create"
+                    component={CreateStorePage}
+                  />
+                  <Route path="/:storeId">
+                    <Route
+                      path="/"
+                      component={StoreIdPage}
+                    />
+                    <Route
+                      path="/settings"
+                      component={StoreSettingsPage}
+                    />
+                    <Route
+                      path="/products"
+                      component={StoreProductsPage}
+                    />
+                    <Route
+                      path="/create-product"
+                      component={CreateProductPage}
+                    />
+                  </Route>
+                </Route>
                 <Route
                   path="*"
                   element={<Navigate href="/" />}
