@@ -7,7 +7,7 @@ import { createAggListResult } from "@/utils/createAggListResult";
 import { useDebounce } from "@/utils/useDebounce";
 import "@/styles/text-field.css"
 import "@/styles/image.css"
-import './styles.css'
+import indexStyles from './index.module.css'
 import { useNavigate } from "@solidjs/router";
 
 export function MarketPage() {
@@ -73,8 +73,8 @@ export function MarketPage() {
       <div class="flex flex-wrap justify-center mt-5 relative">
         <For each={aggregatedProducts().items} fallback={<p>Loading...</p>}>
           {(product) =>
-            <div class="product w-[9rem] cursor-pointer p-4" onClick={() => handleProductClick(product)}>
-              <Image.Root class="image">
+            <div class={`${indexStyles.product} w-[9rem] cursor-pointer p-4`} onClick={() => handleProductClick(product)}>
+              <Image.Root class={indexStyles.image}>
                 <Image.Img
                   class="image__img"
                   src={pb.files.getUrl(product, product.images[0], { 'thumb': '0x128', })} />
@@ -86,7 +86,7 @@ export function MarketPage() {
               <div>{product.name}</div>
             </div>}
         </For>
-        <div ref={observer} class="observer"></div>
+        <div ref={observer} class={indexStyles.observer}></div>
       </div>
     </>
   )
