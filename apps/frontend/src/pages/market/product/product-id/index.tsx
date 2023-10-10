@@ -5,13 +5,11 @@ import { useMainButton } from "@/utils/useMainButton"
 import { useNavigate, useParams } from "@solidjs/router"
 import { Show, createEffect, createResource, onCleanup } from "solid-js"
 import { Image } from "@kobalte/core"
-import { attachDevtoolsOverlay } from "@solid-devtools/overlay"
 import "@/styles/image.css"
 import "./styles.css"
 
 export function MarketProductIdPage() {
 
-  attachDevtoolsOverlay()
   const navigate = useNavigate()
   const params = useParams()
   const pb = usePocketBase()

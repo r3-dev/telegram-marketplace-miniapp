@@ -9,7 +9,6 @@ import "@/styles/button.css"
 import cartStyles from "./cart.module.css"
 import { useMainButton } from "@/utils/useMainButton"
 import { Success } from "@/components/success/success"
-import { attachDevtoolsOverlay } from "@solid-devtools/overlay"
 
 type Texpand = {
   product: ProductsResponse
