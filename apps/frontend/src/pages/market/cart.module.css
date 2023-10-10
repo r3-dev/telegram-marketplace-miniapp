@@ -1,0 +1,36 @@
+:root{
+    --padding: 0.3rem;
+    --image-border-radius: 6px;
+}
+
+.order-item{
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    text-align: left;
+    align-items: center;
+    background-color: var(--tg-theme-secondary-bg-color);
+    border-radius: calc(var(--image-border-radius) + var(--padding));
+    padding: var(--padding);
+}
+
+.image{
+    border-radius: var(--image-border-radius);
+}
+
+.button{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(0deg, var(--tg-theme-bg-color), 90%, transparent);
+}
