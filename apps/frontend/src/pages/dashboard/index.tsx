@@ -10,7 +10,7 @@ export function DashboardPage() {
 
   onMount(() => {
     sdk.mainButton().on('click', handleCreateStore)
-    sdk.mainButton().setText('Создать магазин')
+    sdk.mainButton().setText('Create store')
 
     if (!sdk.mainButton().isVisible) sdk.mainButton().show()
     if (sdk.backButton().isVisible) sdk.backButton().hide()
