@@ -1,5 +1,5 @@
 import { usePocketBase } from "@/contexts/pocketbase"
-import { Collections, OrderItemsRecord, OrdersRecord, OrdersResponse, ProductsRecord, UsersResponse } from "@/types/pb-types"
+import { Collections, OrderItemsRecord, OrdersRecord, OrdersResponse, OrdersStatusOptions, ProductsRecord, UsersResponse } from "@/types/pb-types"
 import { useBackButton } from "@/utils/useBackButton"
 import { useMainButton } from "@/utils/useMainButton"
 import { useNavigate, useParams } from "@solidjs/router"
@@ -44,12 +44,13 @@ export function MarketProductIdPage() {
       //Ищем корзину
       try {
         getOrderResponse = await pb.collection(Collections.Orders)
-          .getFirstListItem(`user.id = "${userId}"`)
+          .getFirstListItem(`user.id = "${userId}" && status = "BuyerInProcess"`)
       }
       catch (err) {
         //Не нашли - создаём новую
         const newOrder: OrdersRecord = {
-          user: userId
+          user: userId,
+          status: OrdersStatusOptions.BuyerInProcess
         }
 
         getOrderResponse = await pb.collection(Collections.Orders)
