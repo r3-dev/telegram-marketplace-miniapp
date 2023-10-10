@@ -1,9 +1,26 @@
+import { Separator } from '@kobalte/core'
 import { useNavigate, useParams } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
-import { createSignal, onCleanup, onMount } from 'solid-js'
+import { createSignal, For, onCleanup, onMount } from 'solid-js'
 
 import { usePocketBase } from '@/contexts/pocketbase'
 import { Collections, StoresResponse } from '@/types/pb-types'
+
+interface MenuItem {
+  title: string
+  link: string
+}
+
+const menuItems: MenuItem[] = [
+  {
+    title: 'Каталог',
+    link: '/dashboard/store/:storeId/products'
+  },
+  {
+    title: 'Настройки',
+    link: '/dashboard/store/:storeId/settings'
+  }
+]
 
 export function StoreIdPage() {
   const [store, setStore] = createSignal<StoresResponse>({} as StoresResponse)
@@ -35,9 +52,30 @@ export function StoreIdPage() {
     navigate('/dashboard')
   }
 
+  function handleMenuClick(menuItem: MenuItem) {
+    navigate(menuItem.link)
+  }
+
   return (
-    <div>
-      <h1>Store {store().name}</h1>
-    </div>
+    <>
+      <h1 class="text-2xl my-2">Store {store().name}</h1>
+      <div class="flex flex-col">
+        <For each={menuItems}>
+          {(menuItem) => (
+            <>
+              <div
+                onClick={() => handleMenuClick(menuItem)}
+                class="flex items-center p-4 space-x-4 cursor-pointer hover:bg-tg-bg-secondary rounded"
+              >
+                <div class="flex-1 min-w-0">
+                  <p class="text-base font-medium truncate">{menuItem.title}</p>
+                </div>
+              </div>
+              <Separator.Root class="border-none bg-tg-bg-secondary" />
+            </>
+          )}
+        </For>
+      </div>
+    </>
   )
 }
