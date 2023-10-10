@@ -13,13 +13,13 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    title: 'Каталог',
+    title: 'Catalog',
     link: '/dashboard/store/:storeId/products'
-  },
-  {
-    title: 'Настройки',
-    link: '/dashboard/store/:storeId/settings'
   }
+  // {
+  //   title: 'Settings',
+  //   link: '/dashboard/store/:storeId/settings'
+  // }
 ]
 
 export function StoreIdPage() {
@@ -55,6 +55,31 @@ export function StoreIdPage() {
   function handleMenuClick(menuItem: MenuItem) {
     navigate(menuItem.link)
   }
+  async function handleDeleteStoreClick() {
+    const deleteConfirm = await sdk.popup().open({
+      message: 'Are you sure you want to delete this store?',
+      buttons: [
+        {
+          type: 'cancel',
+          id: 'cancel'
+        },
+        {
+          type: 'destructive',
+          text: 'Delete',
+          id: 'delete'
+        }
+      ]
+    })
+
+    if (deleteConfirm === 'cancel') return
+
+    try {
+      await pb.collection(Collections.Stores).delete(params.storeId)
+      navigate('/dashboard')
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <>
@@ -71,10 +96,17 @@ export function StoreIdPage() {
                   <p class="text-base font-medium truncate">{menuItem.title}</p>
                 </div>
               </div>
-              <Separator.Root class="border-none bg-tg-bg-secondary" />
             </>
           )}
         </For>
+        <div
+          onClick={handleDeleteStoreClick}
+          class="flex items-center p-4 space-x-4 cursor-pointer hover:bg-tg-bg-secondary rounded text-red-500"
+        >
+          <div class="flex-1 min-w-0">
+            <p class="text-base font-medium truncate">Delete store</p>
+          </div>
+        </div>
       </div>
     </>
   )
