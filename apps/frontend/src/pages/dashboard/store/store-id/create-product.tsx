@@ -3,7 +3,6 @@ import { useNavigate, useParams } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
 import { createEffect, createSignal, onCleanup, onMount } from 'solid-js'
 
-import { CreateProduct } from '@/components/create-product/create-product'
 import { usePocketBase } from '@/contexts/pocketbase'
 import { Collections, ProductsRecord, StoresResponse } from '@/types/pb-types'
 
