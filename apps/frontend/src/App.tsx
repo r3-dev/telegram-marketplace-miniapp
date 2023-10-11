@@ -4,7 +4,7 @@ import { Navigate, Route, Router, Routes } from '@solidjs/router'
 import { SDKProvider } from '@tma.js/sdk-solid'
 
 import { DisplayGate } from './components/twa-display-gate'
-import { PocketbaseProvider } from './contexts/pocketbase'
+import { ApiProvider, PocketbaseProvider } from './contexts/pocketbase'
 import { DashboardPage } from './pages/dashboard'
 import { OrdersPage } from './pages/dashboard/order'
 import { OrderIdPage } from './pages/dashboard/order/order-id'
@@ -59,96 +59,98 @@ function App() {
     >
       <DisplayGate>
         <PocketbaseProvider>
-          <Router>
-            <Routes>
-              <Route path="/market">
-                <Route
-                  path="/"
-                  component={MarketPage}
-                />
-                <Route
-                  path="/store/:storeId"
-                  component={MarketStoreIdPage}
-                />
-                <Route
-                  path="/product/:productId"
-                  component={MarketProductIdPage}
-                />
-                <Route path="/order">
+          <ApiProvider>
+            <Router>
+              <Routes>
+                <Route path="/market">
                   <Route
                     path="/"
-                    component={MarketOrdersPage}
+                    component={MarketPage}
                   />
                   <Route
-                    path="/:orderId"
-                    component={MarketOrderIdPage}
-                  />
-                </Route>
-                <Route
-                  path="/cart"
-                  component={MarketCartPage}
-                />
-                <Route
-                  path="*"
-                  element={<Navigate href="/" />}
-                />
-              </Route>
-              <Route path="/dashboard">
-                <Route
-                  path="/"
-                  component={DashboardPage}
-                />
-                <Route path="/product">
-                  <Route
-                    path="/:productId"
-                    component={ProductIdPage}
-                  />
-                </Route>
-                <Route path="/orders">
-                  <Route
-                    path="/"
-                    component={OrdersPage}
+                    path="/store/:storeId"
+                    component={MarketStoreIdPage}
                   />
                   <Route
-                    path="/:orderId"
-                    component={OrderIdPage}
+                    path="/product/:productId"
+                    component={MarketProductIdPage}
                   />
-                </Route>
-                <Route path="/store">
-                  <Route
-                    path="/"
-                    component={StoresPage}
-                  />
-                  <Route
-                    path="/create"
-                    component={CreateStorePage}
-                  />
-                  <Route path="/:storeId">
+                  <Route path="/order">
                     <Route
                       path="/"
-                      component={StoreIdPage}
+                      component={MarketOrdersPage}
                     />
                     <Route
-                      path="/settings"
-                      component={StoreSettingsPage}
-                    />
-                    <Route
-                      path="/products"
-                      component={StoreProductsPage}
-                    />
-                    <Route
-                      path="/create-product"
-                      component={CreateProductPage}
+                      path="/:orderId"
+                      component={MarketOrderIdPage}
                     />
                   </Route>
+                  <Route
+                    path="/cart"
+                    component={MarketCartPage}
+                  />
+                  <Route
+                    path="*"
+                    element={<Navigate href="/" />}
+                  />
                 </Route>
-                <Route
-                  path="*"
-                  element={<Navigate href="/" />}
-                />
-              </Route>
-            </Routes>
-          </Router>
+                <Route path="/dashboard">
+                  <Route
+                    path="/"
+                    component={DashboardPage}
+                  />
+                  <Route path="/product">
+                    <Route
+                      path="/:productId"
+                      component={ProductIdPage}
+                    />
+                  </Route>
+                  <Route path="/orders">
+                    <Route
+                      path="/"
+                      component={OrdersPage}
+                    />
+                    <Route
+                      path="/:orderId"
+                      component={OrderIdPage}
+                    />
+                  </Route>
+                  <Route path="/store">
+                    <Route
+                      path="/"
+                      component={StoresPage}
+                    />
+                    <Route
+                      path="/create"
+                      component={CreateStorePage}
+                    />
+                    <Route path="/:storeId">
+                      <Route
+                        path="/"
+                        component={StoreIdPage}
+                      />
+                      <Route
+                        path="/settings"
+                        component={StoreSettingsPage}
+                      />
+                      <Route
+                        path="/products"
+                        component={StoreProductsPage}
+                      />
+                      <Route
+                        path="/create-product"
+                        component={CreateProductPage}
+                      />
+                    </Route>
+                  </Route>
+                  <Route
+                    path="*"
+                    element={<Navigate href="/" />}
+                  />
+                </Route>
+              </Routes>
+            </Router>
+          </ApiProvider>
         </PocketbaseProvider>
       </DisplayGate>
     </SDKProvider>
