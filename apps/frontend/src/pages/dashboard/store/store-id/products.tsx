@@ -1,22 +1,21 @@
 import { Image } from '@kobalte/core'
 import { useNavigate, useParams } from '@solidjs/router'
 import { useSDK } from '@tma.js/sdk-solid'
-import PocketBase from 'pocketbase'
-import { createResource, For, onCleanup, onMount, Show } from 'solid-js'
+import { For, onCleanup, onMount, Show } from 'solid-js'
 
 import { DashboardStoreLayout } from '@/components/dashboard-store-layout'
-import { usePocketBase } from '@/contexts/pocketbase'
-import { Collections, ProductsResponse } from '@/types/pb-types'
+import { useApi } from '@/contexts/pocketbase'
+import { ProductsResponse } from '@/types/pb-types'
 
 export function StoreProductsPage() {
   const params = useParams()
-  const pb = usePocketBase()
   const navigate = useNavigate()
+  const api = useApi()
 
-  const [products, { refetch: refetchProducts }] = createResource(
-    { storeId: params.storeId, _pb: pb },
-    fetchProducts
-  )
+  const [products, { refetch: refetchProducts, mutate: mutateProducts }] =
+    api.products.getFullList({
+      filter: `store="${params.storeId}"`
+    })
 
   const sdk = useSDK()
 
@@ -46,28 +45,6 @@ export function StoreProductsPage() {
     navigate(`/dashboard/store/${params.storeId}`)
   }
 
-  function fetchProducts({
-    storeId,
-    _pb
-  }: {
-    storeId: string
-    _pb: PocketBase
-  }) {
-    console.log('fetchProducts', storeId)
-    try {
-      const req = _pb
-        .collection(Collections.Products)
-        .getFullList<ProductsResponse>({
-          filter: `store="${storeId}"`
-        })
-
-      return req
-    } catch (error) {
-      console.log(error)
-      throw new Error('Не удалось получить список товаров')
-    }
-  }
-
   async function handleProductClick(_product: ProductsResponse) {
     // popup to delete store
     const deleteConfirm = await sdk.popup().open({
@@ -88,14 +65,15 @@ export function StoreProductsPage() {
 
     if (deleteConfirm === 'cancel') return
 
-    try {
-      console.log('delete product', _product.id)
+    mutateProducts((prev) => prev?.filter((p) => p.id !== _product.id))
+    const deleteSuccess = await api.products.delete(_product.id)
 
-      await pb.collection(Collections.Products).delete(_product.id)
-      refetchProducts()
-    } catch (error) {
-      console.error(error)
+    if (!deleteSuccess) {
+      mutateProducts((prev) => prev?.concat(_product))
+      return
     }
+
+    refetchProducts()
   }
 
   return (
@@ -104,39 +82,47 @@ export function StoreProductsPage() {
         <h1>Current Product List</h1>
         <div class="flex flex-col">
           <Show
-            when={products() !== undefined && products()!.length > 0}
-            fallback={<div class="text-tg-hint">There are no products yet</div>}
+            when={!products.error}
+            fallback={products.error.message}
           >
-            <For each={products()}>
-              {(_product) => (
-                <div
-                  onClick={() => handleProductClick(_product)}
-                  class="store__item flex items-center p-2 space-x-4 cursor-pointer"
-                >
-                  <div class="flex-shrink-0">
-                    <Image.Root class="image">
-                      <Image.Img
-                        class="image__img"
-                        src={
-                          _product.images
-                            ? _product.images[0]
-                            : 'https://via.placeholder.com/128'
-                        }
-                      />
-                      <Image.Fallback class="image__fallback">
-                        {_product.name.charAt(0).toUpperCase()}
-                      </Image.Fallback>
-                    </Image.Root>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="font-medium truncate">{_product.name}</p>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="font-medium truncate">{_product.price}$</p>
-                  </div>
-                </div>
+            <Show
+              when={products()}
+              fallback={<div>Loading...</div>}
+              keyed
+            >
+              {(_products) => (
+                <For each={_products}>
+                  {(_product) => (
+                    <div
+                      onClick={() => handleProductClick(_product)}
+                      class="store__item flex items-center p-2 space-x-4 cursor-pointer"
+                    >
+                      <div class="flex-shrink-0">
+                        <Image.Root class="image">
+                          <Image.Img
+                            class="image__img"
+                            src={
+                              _product.images
+                                ? _product.images[0]
+                                : 'https://via.placeholder.com/128'
+                            }
+                          />
+                          <Image.Fallback class="image__fallback">
+                            {_product.name.charAt(0).toUpperCase()}
+                          </Image.Fallback>
+                        </Image.Root>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <p class="font-medium truncate">{_product.name}</p>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <p class="font-medium truncate">{_product.price}$</p>
+                      </div>
+                    </div>
+                  )}
+                </For>
               )}
-            </For>
+            </Show>
           </Show>
         </div>
       </DashboardStoreLayout>
