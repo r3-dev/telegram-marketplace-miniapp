@@ -31,7 +31,7 @@ export function Welcome() {
       .collection(Collections.Stores)
       .getList<StoresResponse>()
       .catch(() => {
-        throw new Error('Не удалось получить список магазинов')
+        throw new Error('Error while fetching stores')
       })
 
     setStores(storesResponse)
@@ -44,16 +44,21 @@ export function Welcome() {
   return (
     <div class="flex justify-center flex-col">
       <h1 class="text-lg text-center">
-        Привет, {sdk.initData()?.user?.firstName}!
+        Hi, {sdk.initData()?.user?.firstName}!
       </h1>
       <p class="text-sm text-center mt-4 mb-4">
         <Show
           when={stores().items.length === 0}
-          fallback="Выберите магазин для редактирования"
+          fallback={
+            <div class="text-tg-hint">
+              Choose a store to edit or create a new one
+            </div>
+          }
         >
-          У вас пока нет магазинов
+          You have no stores yet
         </Show>
       </p>
+      <a href="https://t.me/intgmarketbot">Go to marketplace</a>
       <div class="flex flex-col">
         <For each={stores().items}>
           {(store) => (
