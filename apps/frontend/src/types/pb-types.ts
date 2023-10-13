@@ -6,6 +6,7 @@ export enum Collections {
 	Categories = "categories",
 	OrderItems = "order_items",
 	Orders = "orders",
+	ProductVariants = "product_variants",
 	Products = "products",
 	Stores = "stores",
 	Users = "users",
@@ -57,6 +58,10 @@ export type OrdersRecord = {
 	user?: RecordIdString
 }
 
+export type ProductVariantsRecord = {
+	product?: RecordIdString
+}
+
 export type ProductsRecord = {
 	category?: RecordIdString
 	description?: string
@@ -83,6 +88,7 @@ export type UsersRecord = {
 export type CategoriesResponse<Texpand = unknown> = Required<CategoriesRecord> & BaseSystemFields<Texpand>
 export type OrderItemsResponse<Texpand = unknown> = Required<OrderItemsRecord> & BaseSystemFields<Texpand>
 export type OrdersResponse<Texpand = unknown> = Required<OrdersRecord> & BaseSystemFields<Texpand>
+export type ProductVariantsResponse<Texpand = unknown> = Required<ProductVariantsRecord> & BaseSystemFields<Texpand>
 export type ProductsResponse<Texpand = unknown> = Required<ProductsRecord> & BaseSystemFields<Texpand>
 export type StoresResponse<Texpand = unknown> = Required<StoresRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
@@ -93,6 +99,7 @@ export type CollectionRecords = {
 	categories: CategoriesRecord
 	order_items: OrderItemsRecord
 	orders: OrdersRecord
+	product_variants: ProductVariantsRecord
 	products: ProductsRecord
 	stores: StoresRecord
 	users: UsersRecord
@@ -102,6 +109,7 @@ export type CollectionResponses = {
 	categories: CategoriesResponse
 	order_items: OrderItemsResponse
 	orders: OrdersResponse
+	product_variants: ProductVariantsResponse
 	products: ProductsResponse
 	stores: StoresResponse
 	users: UsersResponse
